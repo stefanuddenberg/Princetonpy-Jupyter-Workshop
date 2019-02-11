@@ -1,0 +1,13 @@
+JupyterLab v0.35.4
+Known labextensions:
+   app dir: c:\users\sdu2\appdata\local\continuum\anaconda3\share\jupyter\lab
+        @jupyter-widgets/jupyterlab-manager v0.38.1 enabled  ok
+        @jupyterlab/latex v0.6.1 enabled  ok
+        @jupyterlab/plotly-extension v0.18.0 enabled  ok
+        @jupyterlab/toc v0.6.0 enabled  ok
+        @lckr/jupyterlab_variableinspector v0.1.0 enabled  ok
+        @mflevine/jupyterlab_html v0.1.4 enabled  ok
+        @quentinandre/jupyterlab_snippets v0.2.5 enabled  ok
+        @ryantam626/jupyterlab_code_formatter v0.1.6 enabled  ok
+        jupyterlab_bokeh v0.6.3 enabled  ok
+        nbdime-jupyterlab v0.6.0 enabled  ok

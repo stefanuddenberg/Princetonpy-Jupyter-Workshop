@@ -34,3 +34,7 @@
   - Can also [configure on a per-notebook basis](https://github.com/mwouts/jupytext#-per-notebook-configuration).
 
 - Use Jupyter extension (fork by Yu Zhang) for VS Code (not as good as using actual Jupyter, though).
+
+# Using Jupyter as an Educator
+
+- Use [nbgrader](https://github.com/jupyter/nbgrader) to create, assign, collect, and (automatically) grade assignments.
