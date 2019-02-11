@@ -28,7 +28,7 @@
 #     version: 3.6.2
 # ---
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Imports
 
 # %%
@@ -51,15 +51,73 @@ import seaborn as sns
 # from ipypublish.scripts.ipynb_latex_setup import *
 # from IPython.display import SVG, display, Markdown
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Matplotlib
 # The bread and butter for plotting in Python. See [here](https://matplotlib.org/tutorials/index.html) and [Ben Deverett's excellent notebook](https://github.com/bensondaled/princetonpy/tree/master/20181204) for tutorials.
 
-# %% [markdown] {"toc-hr-collapsed": false}
+# %% [markdown] {"trusted": true}
+# ## xkcd Style Plots
+
+# %%
+with plt.xkcd():
+    # Based on "Stove Ownership" from XKCD by Randall Monroe
+    # http://xkcd.com/418/
+
+    fig = plt.figure()
+    ax = fig.add_axes((0.1, 0.2, 0.8, 0.7))
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    plt.xticks([])
+    plt.yticks([])
+    ax.set_ylim([-30, 10])
+
+    data = np.ones(100)
+    data[70:] -= np.arange(30)
+
+    plt.annotate(
+        'THE DAY I REALIZED\nI COULD COOK BACON\nWHENEVER I WANTED',
+        xy=(70, 1), arrowprops=dict(arrowstyle='->'), xytext=(15, -10))
+
+    plt.plot(data)
+
+    plt.xlabel('time')
+    plt.ylabel('my overall health')
+    fig.text(
+        0.5, 0.05,
+        '"Stove Ownership" from xkcd by Randall Monroe',
+        ha='center')
+
+# %%
+with plt.xkcd():
+    # Based on "The Data So Far" from XKCD by Randall Monroe
+    # http://xkcd.com/373/
+
+    fig = plt.figure()
+    ax = fig.add_axes((0.1, 0.2, 0.8, 0.7))
+    ax.bar([0, 1], [0, 100], 0.25)
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.set_xticks([0, 1])
+    ax.set_xlim([-0.5, 1.5])
+    ax.set_ylim([0, 110])
+    ax.set_xticklabels(['CONFIRMED BY\nEXPERIMENT', 'REFUTED BY\nEXPERIMENT'])
+    plt.yticks([])
+
+    plt.title("CLAIMS OF SUPERNATURAL POWERS")
+
+    fig.text(
+        0.5, -0.05,
+        '"The Data So Far" from xkcd by Randall Monroe',
+        ha='center')
+
+plt.show()
+
+# %% [markdown] {"toc-hr-collapsed": false, "trusted": true}
 # # Seaborn
 # Wrapper around Matplotlib that makes plotting attractive figures easier.
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Changing color palette
 
 # %%
@@ -67,14 +125,14 @@ pal = sns.color_palette("husl", 8)  # optionally set number of colors
 sns.set_palette(pal)
 sns.palplot(sns.color_palette())
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Default Seaborn color palette
 
 # %%
 sns.set_palette("tab10")
 sns.palplot(sns.color_palette())
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Defining custom color palette
 
 # %%
@@ -82,7 +140,7 @@ flatui = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
 sns.set_palette(flatui)
 sns.palplot(sns.color_palette())
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Wes Anderson color palettes
 # You can generate these with the wes Python package. 
 #
@@ -93,7 +151,7 @@ import wes
 wes.available(show=True)
 # wes.set_palette('Darjeeling')
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Line plot
 
 # %%
@@ -102,24 +160,26 @@ sns.set(style="ticks")  # overwrites color palette
 # Load the example dataset for Anscombe's quartet
 anscombe = sns.load_dataset("anscombe")
 
-# Show the results of a linear regression within each dataset
-# Semi-colon suppresses the non-graph output
-ax = sns.lmplot(
-    x="x",
-    y="y",
-    col="dataset",
-    hue="dataset",
-    data=anscombe,
-    col_wrap=2,
-    ci=None,
-    size=4,  # palette=pal,
-    scatter_kws={"s": 50, "alpha": 1},
-)
+# And of course, you can combine it with xkcd style if you want
+with plt.xkcd():
+    # Show the results of a linear regression within each dataset
+    # Semi-colon suppresses the non-graph output
+    ax = sns.lmplot(
+        x="x",
+        y="y",
+        col="dataset",
+        hue="dataset",
+        data=anscombe,
+        col_wrap=2,
+        ci=None,
+        size=4,  # palette=pal,
+        scatter_kws={"s": 50, "alpha": 1},
+    )
 
-# Change axis labels
-ax.set(xlabel="X", ylabel="Y")
+    # Change axis labels
+    ax.set(xlabel="X", ylabel="Y");
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Bar chart
 # Defaults to showing the 95% confidence interval.
 
@@ -127,11 +187,11 @@ ax.set(xlabel="X", ylabel="Y")
 tips = sns.load_dataset("tips")
 ax = sns.barplot(x="day", y="total_bill", data=tips, capsize=0.1)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Subplots -- Violin plot with overlaid beeswarm plot
 
 # %%
-sns.set_palette(flatui)  # change the color scheme
+wes.set_palette("Darjeeling")  # change the color scheme
 
 fig, ax = plt.subplots()
 
@@ -141,9 +201,9 @@ fig.set_size_inches(11.7, 8.27)
 # Overlay a swarmplot on top of a violinplot
 ax = sns.violinplot(x="day", y="total_bill", data=tips, inner=None)
 ax = sns.swarmplot(x="day", y="total_bill", data=tips, color="white")
-ax.set(xlabel="Day of the Week", ylabel="Total Bill in $")
+ax.set(xlabel="Day of the Week", ylabel="Total Bill in $");
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Factor plots 
 
 # %%
@@ -188,7 +248,7 @@ barPlot = sns.factorplot(
     size=5,
     aspect=1,
     legend=False,
-)
+);
 
 beeswarmPlot = sns.factorplot(
     x="day",
@@ -201,7 +261,7 @@ beeswarmPlot = sns.factorplot(
     size=5,
     aspect=1,
     legend=False,
-)
+);
 
 # Format them nicely!
 # Axis labels
@@ -230,13 +290,13 @@ set_legend(beeswarmPlot, legendEntries, 15)
 # barPlot.savefig("barPlot.svg") # can also use other extensions, like .png
 # beeswarmPlot.savefig("beePlot.svg")
 
-# %% [markdown] {"toc-hr-collapsed": false}
+# %% [markdown] {"toc-hr-collapsed": false, "trusted": true}
 # # Altair
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # Declarative plotting library with a lot of useful chart types. Examples below are taken from [here](https://altair-viz.github.io/gallery/).
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Simple scatterplot with tooltips
 
 # %%
@@ -251,7 +311,7 @@ alt.Chart(source).mark_circle(size=60).encode(
     tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
 ).interactive()
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Scatterplot matrix
 
 # %%
@@ -268,7 +328,7 @@ alt.Chart(source).mark_circle().encode(
     column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
 ).interactive()
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Layered histogram
 
 # %%
@@ -302,7 +362,7 @@ alt.Chart(source).mark_area(opacity=0.3, interpolate="step").encode(
     alt.Color("Experiment", scale=alt.Scale(range=["#0000ff", "#008000", "#ff0000"])),
 )
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Bokeh
 # Interactive visualization library leveraging JavaScript. [See here for a video tutorial](https://www.youtube.com/watch?v=9FlUFLmaWvY) and [here for a notebook with various visualizations](https://github.com/claresloggett/demo_visualisation_python/blob/master/Demo_Visualisation.ipynb), including some made with Bokeh.
 
@@ -315,7 +375,7 @@ this_plot.circle(x=tips["total_bill"], y=tips["tip"], size=10, alpha=0.7)
 output_notebook()  # to output inline
 show(this_plot)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## More interactive plot
 # Let's plot a scatterplot of tip amount vs. total bill, separately for men and women.
 #
@@ -369,20 +429,20 @@ this_plot.legend.click_policy = "hide"
 output_notebook()
 show(this_plot)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Pivot table plots
 
 # %%
 from pivottablejs import pivot_ui
 pivot_ui(tips)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Dash/Plotly
 # [Dash/Plotly](https://plot.ly/products/dash/) is another package for producing really nice and interactive graphs, but it requires signing up for an account to initialize it. After initialization you can use it online by default (which means all of your graphs get saved to the cloud for everyone to see forever) or you can use it offline (as demoed below). Examples taken or modified from [here](https://plot.ly/python/ipython-notebook-tutorial/).  
 #
 # I'm not familiar with the new Dash API that's been recently introduced, nor have I really explored using Plotly. I've been able to get everything that I need done in Matplotlib/Seaborn, so understand that the code snippets below may no longer work with recent versions of the Plotly package (which seems like a different thing to Dash).
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Troubleshooting setup
 # When I first tried using plotly I sometimes got `IOPub data rate exceeded` errors. Here's how you fix that:
 #
@@ -403,7 +463,7 @@ plotly.offline.iplot({
     "layout": Layout(title="hello world")
 })
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Tables
 
 # %%
@@ -415,7 +475,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/schoo
 table = ff.create_table(df)
 py.iplot(table, filename='plotly\table1')
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Bar graphs
 
 # %%
@@ -450,7 +510,7 @@ fig = Figure(data=data, layout=layout)
 
 py.iplot(fig)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # # Interactive Slider
 
 # %%
@@ -483,7 +543,7 @@ fig = dict(data=data, layout=layout)
 
 py.iplot(fig)
 
-# %% [markdown]
+# %% [markdown] {"trusted": true}
 # ## Interactive 3D Plot
 
 # %%

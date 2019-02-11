@@ -54,6 +54,65 @@ import seaborn as sns
 The bread and butter for plotting in Python. See [here](https://matplotlib.org/tutorials/index.html) and [Ben Deverett's excellent notebook](https://github.com/bensondaled/princetonpy/tree/master/20181204) for tutorials.
 
 
+## xkcd Style Plots
+
+```python
+with plt.xkcd():
+    # Based on "Stove Ownership" from XKCD by Randall Monroe
+    # http://xkcd.com/418/
+
+    fig = plt.figure()
+    ax = fig.add_axes((0.1, 0.2, 0.8, 0.7))
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    plt.xticks([])
+    plt.yticks([])
+    ax.set_ylim([-30, 10])
+
+    data = np.ones(100)
+    data[70:] -= np.arange(30)
+
+    plt.annotate(
+        'THE DAY I REALIZED\nI COULD COOK BACON\nWHENEVER I WANTED',
+        xy=(70, 1), arrowprops=dict(arrowstyle='->'), xytext=(15, -10))
+
+    plt.plot(data)
+
+    plt.xlabel('time')
+    plt.ylabel('my overall health')
+    fig.text(
+        0.5, 0.05,
+        '"Stove Ownership" from xkcd by Randall Monroe',
+        ha='center')
+```
+
+```python
+with plt.xkcd():
+    # Based on "The Data So Far" from XKCD by Randall Monroe
+    # http://xkcd.com/373/
+
+    fig = plt.figure()
+    ax = fig.add_axes((0.1, 0.2, 0.8, 0.7))
+    ax.bar([0, 1], [0, 100], 0.25)
+    ax.spines['right'].set_color('none')
+    ax.spines['top'].set_color('none')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.set_xticks([0, 1])
+    ax.set_xlim([-0.5, 1.5])
+    ax.set_ylim([0, 110])
+    ax.set_xticklabels(['CONFIRMED BY\nEXPERIMENT', 'REFUTED BY\nEXPERIMENT'])
+    plt.yticks([])
+
+    plt.title("CLAIMS OF SUPERNATURAL POWERS")
+
+    fig.text(
+        0.5, -0.05,
+        '"The Data So Far" from xkcd by Randall Monroe',
+        ha='center')
+
+plt.show()
+```
+
 # Seaborn
 Wrapper around Matplotlib that makes plotting attractive figures easier.
 
@@ -100,22 +159,24 @@ sns.set(style="ticks")  # overwrites color palette
 # Load the example dataset for Anscombe's quartet
 anscombe = sns.load_dataset("anscombe")
 
-# Show the results of a linear regression within each dataset
-# Semi-colon suppresses the non-graph output
-ax = sns.lmplot(
-    x="x",
-    y="y",
-    col="dataset",
-    hue="dataset",
-    data=anscombe,
-    col_wrap=2,
-    ci=None,
-    size=4,  # palette=pal,
-    scatter_kws={"s": 50, "alpha": 1},
-)
+# And of course, you can combine it with xkcd style if you want
+with plt.xkcd():
+    # Show the results of a linear regression within each dataset
+    # Semi-colon suppresses the non-graph output
+    ax = sns.lmplot(
+        x="x",
+        y="y",
+        col="dataset",
+        hue="dataset",
+        data=anscombe,
+        col_wrap=2,
+        ci=None,
+        size=4,  # palette=pal,
+        scatter_kws={"s": 50, "alpha": 1},
+    )
 
-# Change axis labels
-ax.set(xlabel="X", ylabel="Y")
+    # Change axis labels
+    ax.set(xlabel="X", ylabel="Y");
 ```
 
 ## Bar chart
@@ -129,7 +190,7 @@ ax = sns.barplot(x="day", y="total_bill", data=tips, capsize=0.1)
 ## Subplots -- Violin plot with overlaid beeswarm plot
 
 ```python
-sns.set_palette(flatui)  # change the color scheme
+wes.set_palette("Darjeeling")  # change the color scheme
 
 fig, ax = plt.subplots()
 
@@ -139,7 +200,7 @@ fig.set_size_inches(11.7, 8.27)
 # Overlay a swarmplot on top of a violinplot
 ax = sns.violinplot(x="day", y="total_bill", data=tips, inner=None)
 ax = sns.swarmplot(x="day", y="total_bill", data=tips, color="white")
-ax.set(xlabel="Day of the Week", ylabel="Total Bill in $")
+ax.set(xlabel="Day of the Week", ylabel="Total Bill in $");
 ```
 
 ## Factor plots 
@@ -186,7 +247,7 @@ barPlot = sns.factorplot(
     size=5,
     aspect=1,
     legend=False,
-)
+);
 
 beeswarmPlot = sns.factorplot(
     x="day",
@@ -199,7 +260,7 @@ beeswarmPlot = sns.factorplot(
     size=5,
     aspect=1,
     legend=False,
-)
+);
 
 # Format them nicely!
 # Axis labels
