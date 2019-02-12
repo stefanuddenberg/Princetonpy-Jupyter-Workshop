@@ -66,6 +66,22 @@
 # </div>
 
 # %% [markdown]
+# # Debugging in Jupyter Notebooks
+# Use `set_trace()` where you want the debugger to start.<br>
+# 'n' moves onto the next line<br>
+# 'c' continues execution of the script
+
+# %%
+from IPython.core.debugger import set_trace
+
+def increment_value(a):
+    a += 1
+    set_trace()
+    print(a)
+
+increment_value(3)
+
+# %% [markdown]
 # # Magic commands
 # These are useful pieces of code that perform some common operations within Jupyter.
 

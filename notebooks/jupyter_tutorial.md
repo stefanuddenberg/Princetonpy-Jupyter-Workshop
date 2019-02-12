@@ -65,6 +65,22 @@ You can also view and edit such shortcuts from the "Help" menu at the top of the
 </div>
 
 
+# Debugging in Jupyter Notebooks
+Use `set_trace()` where you want the debugger to start.<br>
+'n' moves onto the next line<br>
+'c' continues execution of the script
+
+```python
+from IPython.core.debugger import set_trace
+
+def increment_value(a):
+    a += 1
+    set_trace()
+    print(a)
+
+increment_value(3)
+```
+
 # Magic commands
 These are useful pieces of code that perform some common operations within Jupyter.
 
