@@ -28,6 +28,7 @@ jupyter:
 ---
 
 # Using R and MATLAB in Jupyter with Python
+N.B. Although Jupyter stands for Julia, Python, and R, R Markdown is really the way to go if you're working with R.
 
 
 # Run R code
@@ -90,11 +91,73 @@ library("ggplot2")
 ggplot(data = df) + geom_point(aes(x = X, y = Y, color = Letter, size = Z))
 ```
 
-```R
-install.packages("rlang")
+# Run MATLAB code
+
+
+## MATLAB for Jupyter Installation
+# ```bash
+pip install matlab_kernel
+pip install pymatbridge
+# ```
+
+If you're getting a "zmq channel closed" error, open jupyter notebook from a different port when using MATLAB
+# ```bash
+jupyter notebook --port=8889
+# ```
+
+
+## Example Python to MATLAB pipeline
+Load MATLAB extension for running MATLAB code within a Python notebook.
+
+```python
+%load_ext pymatbridge
+```
+
+Let's try transposing an array from Python in MATLAB, then feeding it back into Python.
+<br>
+First, define an array.
+
+```python
+a = [
+    [1, 2],
+    [3, 4],
+    [5, 6]
+]
+a
+```
+
+Now, transpose it easily in MATLAB!
+
+```python
+%%matlab -i a -o a
+a = a'
+```
+
+Finally, check that Python can see the correct value of `a`
+
+```python
+a
+```
+
+## Plotting in MATLAB
+
+```python
+%%matlab
+b = linspace(0.01,6*pi,100);
+plot(sin(b))
+grid on
+hold on
+plot(cos(b),'r')
+```
+
+Exit MATLAB when done.
+
+```python
+%unload_ext pymatbridge
 ```
 
 # Run Javascript code
+Note that Javascript executes as the notebook is opened, even if it's been exported as HTML!
 
 ```javascript
 console.log('hey!')
