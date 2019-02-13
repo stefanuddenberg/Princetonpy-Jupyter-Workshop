@@ -73,6 +73,7 @@
 # - You might have to preface that with `sudo` if you're on a Mac.
 # - Alternatively, use `conda install insert_package_name_here` if you run into issues with pip
 # - `conda install -c conda-forge insert_package_name_here` is also an option for certain packages.
+# - Can also get started with `pip install requirements.txt` if there is a particular environment you'd like (e.g., the one in this repo).
 
 # %% [markdown]
 # ## Troubleshooting
@@ -96,7 +97,20 @@
 #     - Run at terminal for (most of) my aesthetic setup: `jt -t grade3 -fs 12 -tfs 12 -nfs 115 -cellw 88% -T`
 #     - If you don't like it, you can always go back to the default: `jt -r`
 # - [**jupytext**](https://github.com/mwouts/jupytext)
-#     - Allows you to save your notebook in markdown and .py formats. Extremely useful. 
+#     - Allows you to save your notebook in markdown and .py formats. Extremely useful.
+#     - My config:
+#     ```python
+#     c.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"
+#     # Always pair ipynb notebooks to md and py files
+#     c.ContentsManager.default_jupytext_formats = "ipynb,md,py"
+#     # Use the percent format when saving as py
+#     c.ContentsManager.preferred_jupytext_formats_save = "py:percent"
+#     # Keep all metadata in other file types
+#     c.ContentsManager.default_notebook_metadata_filter = "all"
+#     c.ContentsManager.default_cell_metadata_filter = "all"
+#     ```
+
+# %% [markdown]
 # - **matlab_kernel** and **pymatbridge**
 #     - For using MATLAB
 #     - If pymatbridge doesn't work, go to MATLABROOT\extern\engines\python and run `python setup.py install`
