@@ -321,3 +321,154 @@ aovrm = AnovaRM(df, depvar="rt", subject="id", within=["iv"])
 fit = aovrm.fit()
 fit.summary()
 ```
+
+# dfply
+For those of you who are familiar with R and the tidyverse, the [dfply package](https://github.com/kieferk/dfply) allows you to have dplyr-like piping in Python. The pipe operator for this package is `>>`, while the result of each computation step is given by `X`. `>>=` is used for in-place assignment. All the documentation is available at the link; I'm just going to go over some useful basics here.
+
+```python
+from dfply import *
+
+diamonds >> head()
+```
+
+## Selection
+
+
+Select two of the columns using `X` to represent the piped data frame.
+
+```python
+diamonds >> select(X.cut, X.carat) >> head()
+```
+
+Alternatively, you can use an array of field names.
+
+```python
+diamonds >> select(["cut", "carat"]) >> head()
+```
+
+Or we can refer to the columns by their numerical index.
+
+```python
+diamonds >> select(1, 0) >> head()
+```
+
+## Dropping
+Works the same way as `select`. 
+
+```python
+# drop cut (1), price, x and y
+diamonds >> drop(1, X.price, ["x", "y"]) >> head()
+```
+
+## Inverse selection
+What if you want all the columns _except_ for some selection? Use the `~` operator. Only works with `X`-type selection.
+
+```python
+# Select all columns except for carat, cut, and price
+diamonds >> select(~X.carat, ~X.cut, ~X.price) >> head()
+```
+
+## Filtering
+Filtering rows with logical criteria is done with either `mask` or `filter_by`.
+
+```python
+diamonds >> mask(X.cut == "Ideal") >> head()
+```
+
+As with all things Python, multi-line statements can be placed between parentheses.
+
+```python
+(
+    diamonds
+    >> filter_by(X.cut == "Ideal", X.color == "E", X.table < 55, X.price < 500)
+    >> head()
+)
+```
+
+## Pulling
+Retrieves a column as a pandas series, if you care about a particular column at the end of your pipeline.
+
+```python
+(
+    diamonds
+    >> filter_by(X.cut == "Ideal", X.color == "E", X.table < 55, X.price < 500)
+    >> pull("carat")
+)
+```
+
+## Sorting
+Use `arrange`, which is a wrapper for `.sort_values` in pandas.
+
+```python
+diamonds >> arrange(X.table, ascending=False) >> head(5)
+```
+
+Can sort by multiple values with array notation.
+
+```python
+diamonds >> arrange(["color", "table"], ascending=False) >> head()
+```
+
+```python
+(
+    diamonds
+    >> group_by(X.cut)
+    >> arrange(X.price)    
+    >> head(3)
+    >> ungroup()
+    >> mask(X.carat < 0.23)    
+)
+```
+
+## Creating new columns
+Use `mutate()` to compute new columns.
+
+```python
+diamonds >> mutate(x_plus_y=X.x + X.y) >> select(columns_from('x')) >> head(3)
+```
+
+`transmute()` to mutate and select variables.
+
+```python
+diamonds >> transmute(x_plus_y=X.x + X.y, y_div_z=(X.y / X.z)) >> head(3)
+```
+
+## Grouping
+
+```python
+(
+    diamonds
+    >> group_by(X.cut)
+    >> mutate(price_lead=lead(X.price), price_lag=lag(X.price))
+    >> head(2) # select 2 of each cut, since grouped
+    >> select(X.cut, X.price, X.price_lead, X.price_lag)
+)
+```
+
+## Summarizing
+
+```python
+(
+    diamonds
+    >> group_by(X.cut)
+    >> summarize(price_mean=X.price.mean(), price_std=X.price.std())
+)
+```
+
+```python
+(
+    diamonds
+    >> group_by(X.cut, X.color)
+    >> summarize(price_mean=X.price.mean(), price_std=X.price.std())    
+)
+```
+
+Summarizing multiple columns with `summarize_each(function_list, *columns)`; can use your favorite indexing style for columns.
+
+```python
+diamonds >> group_by(X.cut) >> summarize_each([np.mean, np.var], X.price, "depth", 5)
+```
+
+```python
+
+```
