@@ -172,7 +172,7 @@ with plt.xkcd():
         data=anscombe,
         col_wrap=2,
         ci=None,
-        size=4,  # palette=pal,
+        height=4,  # palette=pal,
         scatter_kws={"s": 50, "alpha": 1},
     )
 
@@ -204,7 +204,7 @@ ax = sns.swarmplot(x="day", y="total_bill", data=tips, color="white")
 ax.set(xlabel="Day of the Week", ylabel="Total Bill in $");
 
 # %% [markdown] {"trusted": true}
-# ## Factor plots 
+# ## Factor plots (catplot)
 
 # %%
 def set_titles(thisPlot, titleList, fontSize):
@@ -238,19 +238,19 @@ def set_legend(thisPlot, legendEntries, fontSize):
 sns.set_palette("tab10")
 
 # Make plots -- many of these arguments are optional
-barPlot = sns.factorplot(
+barPlot = sns.catplot(
     x="day",
     y="total_bill",
     hue="sex",
     col="time",
     kind="bar",
     data=tips,
-    size=5,
+    height=5,
     aspect=1,
     legend=False,
 );
 
-beeswarmPlot = sns.factorplot(
+beeswarmPlot = sns.catplot(
     x="day",
     y="total_bill",
     hue="sex",
@@ -258,7 +258,7 @@ beeswarmPlot = sns.factorplot(
     kind="swarm",
     dodge=True,
     data=tips,
-    size=5,
+    height=5,
     aspect=1,
     legend=False,
 );
@@ -586,5 +586,23 @@ layout = Layout(
 fig = Figure(data=data, layout=layout)
 py.iplot(fig)
 
-# %%
+# %% [markdown]
+# # ggplot (plotnine)
+# If you have a background in R, you can use the plotnine library as a plug-in replacement for ggplot in Python. It has the same API you're familiar with. Combine with [dfply](https://github.com/kieferk/dfply) and pandas for a very good implementation of the tidyverse in Python.
 
+# %%
+from plotnine import *
+
+iris = sns.load_dataset("iris")
+
+(
+    ggplot(iris)
+    + aes(x="sepal_length", y="petal_length", colour="species")
+    + geom_point()
+)
+
+# %% [markdown]
+# As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib.
+
+# %%
+sns.pairplot(iris, hue="species");
