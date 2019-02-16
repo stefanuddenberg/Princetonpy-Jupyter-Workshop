@@ -1,5 +1,6 @@
 ---
 jupyter:
+  celltoolbar: Slideshow
   hide_input: false
   jupytext:
     metadata_filter:
@@ -27,7 +28,9 @@ jupyter:
     pygments_lexer: ipython3
     version: 3.6.2
   toc:
-    nav_menu: {}
+    nav_menu:
+      height: 162px
+      width: 246px
     number_sections: true
     sideBar: true
     skip_h1_title: false
@@ -64,10 +67,14 @@ jupyter:
 
 
 # In-depth pandas tutorial
-[Giant pandas tutorial](https://www.youtube.com/watch?v=oGzU688xCUs) and [attendant notes](https://github.com/chendaniely/scipy-2017-tutorial-pandas) available at the links.
+
+
+[Giant pandas tutorial](https://www.youtube.com/watch?v=oGzU688xCUs) and [attendant notes](https://github.com/chendaniely/scipy-2017-tutorial-pandas) available at these links.
 
 
 # Imports
+
+
 Allow plots in the notebook itself, and enable some helpful functions
 
 ```python
@@ -77,6 +84,7 @@ Allow plots in the notebook itself, and enable some helpful functions
 %config InlineBackend.print_figure_kwargs = {'bbox_inches':'tight'} # No extra white space
 %config InlineBackend.figure_format = 'svg' # 'png' is default
 
+
 import warnings
 warnings.filterwarnings('ignore') # Because we are adults
 import matplotlib.pyplot as plt
@@ -84,13 +92,12 @@ import pandas as pd
 import seaborn as sns
 ```
 
+# Data exploration
+
 ```python
 data = sns.load_dataset("tips")
 data.head()  # show first n entries (default is 5)
 ```
-
-# Data exploration
-
 
 ## Histograms
 
@@ -125,6 +132,8 @@ grouped_by_sex["tip"].describe()
 ```
 
 ## Subsetting data
+
+
 Let's get the tips given on Sunday at dinner time only.
 
 ```python
@@ -135,6 +144,8 @@ sunday_dinner_tips = data.tip[(data.day == "Sun") & (data.time == "Dinner")]
 
 
 ### Add new column
+
+
 Add a new column showing the percentage of the total bill tipped using a lambda expression. Naturally, you can also accomplish this by defining a named function.
 
 ```python
@@ -145,6 +156,8 @@ data.head()
 ```
 
 ## Deleting columns
+
+
 Delete that new tip percentage column.
 
 ```python
@@ -153,14 +166,23 @@ data.head()
 ```
 
 # Inferential Statistics
+
+
 Examples of inferential statistics using statsmodels. Note that there are some recent and annoying breaking changes between pandas and numpy when dealing with pandas's "categorical" data type.
 
 
 ## ANOVA
-Perform an ANOVA using syntax akin to that of R.
 
 
+Perform an ANOVA using syntax akin to that of R. Because pandas recently changed how it represents categorical data, this requires a tiny bit of preprocessing.
+
+
+### ANOVA preprocessing
 First, figure out which columns have the annoying "categorical" data type.
+
+```python
+data.dtypes
+```
 
 ```python
 data.dtypes
@@ -192,6 +214,8 @@ display(table)
 ```
 
 ## Table aesthetics
+
+
 Make the table prettier and more intelligible.
 
 ```python
@@ -223,7 +247,6 @@ def bold_significant(val, alpha=0.05):
 ```python
 from numpy import sqrt
 from scipy.stats import ttest_ind
-
 
 def cohens_d(t, n):
     return 2 * t / sqrt(n - 2)
@@ -292,6 +315,8 @@ Note that you can copy paste such outputs directly into Word with no loss of for
 
 
 ## Repeated Measures ANOVA
+
+
 [See example here.](https://www.marsja.se/repeated-measures-anova-in-python-using-statsmodels/)
 
 ```python
@@ -301,6 +326,8 @@ import statsmodels
 from statsmodels.stats.anova import AnovaRM
 statsmodels.__version__
 ```
+
+Generate dummy data.
 
 ```python
 N = 20
@@ -316,6 +343,8 @@ iv = np.concatenate([np.array([p] * N) for p in P]).tolist()
 df = pd.DataFrame({"id": sub_id, "rt": rt, "iv": iv})
 ```
 
+Do the repeated measures ANOVA.
+
 ```python
 aovrm = AnovaRM(df, depvar="rt", subject="id", within=["iv"])
 fit = aovrm.fit()
@@ -323,6 +352,8 @@ fit.summary()
 ```
 
 # dfply
+
+
 For those of you who are familiar with R and the tidyverse, the [dfply package](https://github.com/kieferk/dfply) allows you to have dplyr-like piping in Python. The pipe operator for this package is `>>`, while the result of each computation step is given by `X`. `>>=` is used for in-place assignment. All the documentation is available at the link; I'm just going to go over some useful basics here.
 
 ```python
@@ -353,7 +384,9 @@ diamonds >> select(1, 0) >> head()
 ```
 
 ## Dropping
-Works the same way as `select`. 
+
+
+Works the same way as `select`.
 
 ```python
 # drop cut (1), price, x and y
@@ -361,6 +394,8 @@ diamonds >> drop(1, X.price, ["x", "y"]) >> head()
 ```
 
 ## Inverse selection
+
+
 What if you want all the columns _except_ for some selection? Use the `~` operator. Only works with `X`-type selection.
 
 ```python
@@ -369,6 +404,8 @@ diamonds >> select(~X.carat, ~X.cut, ~X.price) >> head()
 ```
 
 ## Filtering
+
+
 Filtering rows with logical criteria is done with either `mask` or `filter_by`.
 
 ```python
@@ -386,6 +423,8 @@ As with all things Python, multi-line statements can be placed between parenthes
 ```
 
 ## Pulling
+
+
 Retrieves a column as a pandas series, if you care about a particular column at the end of your pipeline.
 
 ```python
@@ -397,6 +436,8 @@ Retrieves a column as a pandas series, if you care about a particular column at 
 ```
 
 ## Sorting
+
+
 Use `arrange`, which is a wrapper for `.sort_values` in pandas.
 
 ```python
@@ -421,10 +462,20 @@ diamonds >> arrange(["color", "table"], ascending=False) >> head()
 ```
 
 ## Creating new columns
+
+
 Use `mutate()` to compute new columns.
 
 ```python
 diamonds >> mutate(x_plus_y=X.x + X.y) >> select(columns_from('x')) >> head(3)
+```
+
+Remember the `tips` data from earlier and how we made a `tip_percentage` column? This is much easier with dfply than native pandas.
+
+```python
+tips = sns.load_dataset("tips")
+tips >>= mutate(tip_percentage=X.tip / X.total_bill * 100)
+tips.head()
 ```
 
 `transmute()` to mutate and select variables.
@@ -467,8 +518,4 @@ Summarizing multiple columns with `summarize_each(function_list, *columns)`; can
 
 ```python
 diamonds >> group_by(X.cut) >> summarize_each([np.mean, np.var], X.price, "depth", 5)
-```
-
-```python
-
 ```

@@ -1,5 +1,6 @@
 # ---
 # jupyter:
+#   celltoolbar: Slideshow
 #   hide_input: false
 #   jupytext:
 #     metadata_filter:
@@ -27,7 +28,9 @@
 #     pygments_lexer: ipython3
 #     version: 3.6.2
 #   toc:
-#     nav_menu: {}
+#     nav_menu:
+#       height: 162px
+#       width: 246px
 #     number_sections: true
 #     sideBar: true
 #     skip_h1_title: false
@@ -60,23 +63,28 @@
 #     window_display: false
 # ---
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Intro to data analysis with pandas
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # In-depth pandas tutorial
-# [Giant pandas tutorial](https://www.youtube.com/watch?v=oGzU688xCUs) and [attendant notes](https://github.com/chendaniely/scipy-2017-tutorial-pandas) available at the links.
 
 # %% [markdown]
+# [Giant pandas tutorial](https://www.youtube.com/watch?v=oGzU688xCUs) and [attendant notes](https://github.com/chendaniely/scipy-2017-tutorial-pandas) available at these links.
+
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Imports
+
+# %% [markdown]
 # Allow plots in the notebook itself, and enable some helpful functions
 
-# %% {"collapsed": true}
+# %% {"slideshow": {"slide_type": "-"}}
 # %reset -f
 # %matplotlib inline
 # %config InlineBackend.figure_format = 'retina' # High-res graphs (rendered irrelevant by svg option below)
 # %config InlineBackend.print_figure_kwargs = {'bbox_inches':'tight'} # No extra white space
 # %config InlineBackend.figure_format = 'svg' # 'png' is default
+
 
 import warnings
 warnings.filterwarnings('ignore') # Because we are adults
@@ -84,14 +92,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
 
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # Data exploration
+
 # %%
 data = sns.load_dataset("tips")
 data.head()  # show first n entries (default is 5)
 
-# %% [markdown]
-# # Data exploration
-
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Histograms
 
 # %%
@@ -100,7 +108,7 @@ sns.despine()  # Remove top and right side of box
 
 plt.show()  # Somewhat redundant in this context, but suppresses annoying text output.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Overlaid histograms
 
 # %%
@@ -117,24 +125,28 @@ axes.legend(["Men", "Women"], loc=(0.75, 0.5))
 sns.despine()
 plt.show()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Descriptive statistics
 
 # %%
 grouped_by_sex["tip"].describe()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Subsetting data
+
+# %% [markdown]
 # Let's get the tips given on Sunday at dinner time only.
 
-# %% {"collapsed": true}
+# %%
 sunday_dinner_tips = data.tip[(data.day == "Sun") & (data.time == "Dinner")]
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Data processing
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "-"}}
 # ### Add new column
+
+# %% [markdown]
 # Add a new column showing the percentage of the total bill tipped using a lambda expression. Naturally, you can also accomplish this by defining a named function.
 
 # %%
@@ -143,29 +155,39 @@ data["tip_percentage"] = data.apply(
 )
 data.head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Deleting columns
+
+# %% [markdown]
 # Delete that new tip percentage column.
 
 # %%
 del data["tip_percentage"]
 data.head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Inferential Statistics
+
+# %% [markdown]
 # Examples of inferential statistics using statsmodels. Note that there are some recent and annoying breaking changes between pandas and numpy when dealing with pandas's "categorical" data type.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## ANOVA
-# Perform an ANOVA using syntax akin to that of R.
 
 # %% [markdown]
+# Perform an ANOVA using syntax akin to that of R. Because pandas recently changed how it represents categorical data, this requires a tiny bit of preprocessing.
+
+# %% [markdown]
+# ### ANOVA preprocessing
 # First, figure out which columns have the annoying "categorical" data type.
 
 # %%
 data.dtypes
 
-# %% [markdown]
+# %%
+data.dtypes
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Second, convert those to strings (will show as "object", which numpy can actually understand).
 
 # %%
@@ -176,7 +198,7 @@ for category in categories:
 
 data.dtypes
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Now run the ANOVA.
 
 # %%
@@ -190,8 +212,10 @@ table = sm.stats.anova_lm(lm, typ=2)
 
 display(table)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Table aesthetics
+
+# %% [markdown]
 # Make the table prettier and more intelligible.
 
 # %%
@@ -217,13 +241,12 @@ def bold_significant(val, alpha=0.05):
     .format("{:.3f}", subset=["sum_sq", "F", "PR(>F)"])  # show only 3 decimal places
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## T-tests
 
 # %%
 from numpy import sqrt
 from scipy.stats import ttest_ind
-
 
 def cohens_d(t, n):
     return 2 * t / sqrt(n - 2)
@@ -255,7 +278,7 @@ results.loc[comparison] = [n, t, p, d]
     .format("{:.3f}", subset=["t", "p", "d"])
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Place statistics in text with Markdown
 
 # %%
@@ -282,7 +305,7 @@ def report_t_test(df, t, p, d, alpha=0.001):
 
 report_t_test(df, t, p, d)
 
-# %% [markdown] {"variables": {"format(d, '.3f').lstrip('0')": ".178", "format(p, '.3f').lstrip('0')": ".166", "format(t, '.2f').lstrip('0')": "1.39", "inequality_symbol": "=", "n-2": "242"}}
+# %% [markdown] {"slideshow": {"slide_type": "-"}, "variables": {"n-2": "242", "format(t, '.2f').lstrip('0')": "1.39", "inequality</em>symbol": "<p><strong>SyntaxError</strong>: invalid syntax (<ipython-input-71-c4d8463e4db3>, line 1)</p>\n", "format(p, '.3f').lstrip('0')": ".166", "format(d, '.3f').lstrip('0')": ".178"}}
 # And in plain markdown:
 # _t_({{n-2}})={{format(t, '.2f').lstrip('0')}}, *p*{{inequality_symbol}}{{format(p, '.3f').lstrip('0')}}, *d*={{format(d, '.3f').lstrip('0')}}
 #
@@ -290,8 +313,10 @@ report_t_test(df, t, p, d)
 # Note that you can copy paste such outputs directly into Word with no loss of formatting!
 # </div>
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Repeated Measures ANOVA
+
+# %% [markdown]
 # [See example here.](https://www.marsja.se/repeated-measures-anova-in-python-using-statsmodels/)
 
 # %%
@@ -301,7 +326,10 @@ import statsmodels
 from statsmodels.stats.anova import AnovaRM
 statsmodels.__version__
 
-# %% {"collapsed": true}
+# %% [markdown]
+# Generate dummy data.
+
+# %% {"slideshow": {"slide_type": "-"}}
 N = 20
 P = [1, 2]
 
@@ -314,13 +342,18 @@ iv = np.concatenate([np.array([p] * N) for p in P]).tolist()
 
 df = pd.DataFrame({"id": sub_id, "rt": rt, "iv": iv})
 
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# Do the repeated measures ANOVA.
+
 # %%
 aovrm = AnovaRM(df, depvar="rt", subject="id", within=["iv"])
 fit = aovrm.fit()
 fit.summary()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # dfply
+
+# %% [markdown]
 # For those of you who are familiar with R and the tidyverse, the [dfply package](https://github.com/kieferk/dfply) allows you to have dplyr-like piping in Python. The pipe operator for this package is `>>`, while the result of each computation step is given by `X`. `>>=` is used for in-place assignment. All the documentation is available at the link; I'm just going to go over some useful basics here.
 
 # %%
@@ -328,7 +361,7 @@ from dfply import *
 
 diamonds >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Selection
 
 # %% [markdown]
@@ -337,42 +370,48 @@ diamonds >> head()
 # %%
 diamonds >> select(X.cut, X.carat) >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Alternatively, you can use an array of field names.
 
 # %%
 diamonds >> select(["cut", "carat"]) >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Or we can refer to the columns by their numerical index.
 
 # %%
 diamonds >> select(1, 0) >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Dropping
-# Works the same way as `select`. 
+
+# %% [markdown]
+# Works the same way as `select`.
 
 # %%
 # drop cut (1), price, x and y
 diamonds >> drop(1, X.price, ["x", "y"]) >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Inverse selection
+
+# %% [markdown]
 # What if you want all the columns _except_ for some selection? Use the `~` operator. Only works with `X`-type selection.
 
 # %%
 # Select all columns except for carat, cut, and price
 diamonds >> select(~X.carat, ~X.cut, ~X.price) >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Filtering
+
+# %% [markdown]
 # Filtering rows with logical criteria is done with either `mask` or `filter_by`.
 
 # %%
 diamonds >> mask(X.cut == "Ideal") >> head()
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # As with all things Python, multi-line statements can be placed between parentheses.
 
 # %%
@@ -382,8 +421,10 @@ diamonds >> mask(X.cut == "Ideal") >> head()
     >> head()
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Pulling
+
+# %% [markdown]
 # Retrieves a column as a pandas series, if you care about a particular column at the end of your pipeline.
 
 # %%
@@ -393,20 +434,22 @@ diamonds >> mask(X.cut == "Ideal") >> head()
     >> pull("carat")
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Sorting
+
+# %% [markdown]
 # Use `arrange`, which is a wrapper for `.sort_values` in pandas.
 
 # %%
 diamonds >> arrange(X.table, ascending=False) >> head(5)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Can sort by multiple values with array notation.
 
 # %%
 diamonds >> arrange(["color", "table"], ascending=False) >> head()
 
-# %%
+# %% {"slideshow": {"slide_type": "-"}}
 (
     diamonds
     >> group_by(X.cut)
@@ -416,20 +459,30 @@ diamonds >> arrange(["color", "table"], ascending=False) >> head()
     >> mask(X.carat < 0.23)    
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Creating new columns
+
+# %% [markdown]
 # Use `mutate()` to compute new columns.
 
 # %%
 diamonds >> mutate(x_plus_y=X.x + X.y) >> select(columns_from('x')) >> head(3)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# Remember the `tips` data from earlier and how we made a `tip_percentage` column? This is much easier with dfply than native pandas.
+
+# %%
+tips = sns.load_dataset("tips")
+tips >>= mutate(tip_percentage=X.tip / X.total_bill * 100)
+tips.head()
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # `transmute()` to mutate and select variables.
 
 # %%
 diamonds >> transmute(x_plus_y=X.x + X.y, y_div_z=(X.y / X.z)) >> head(3)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Grouping
 
 # %%
@@ -441,7 +494,7 @@ diamonds >> transmute(x_plus_y=X.x + X.y, y_div_z=(X.y / X.z)) >> head(3)
     >> select(X.cut, X.price, X.price_lead, X.price_lag)
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Summarizing
 
 # %%
@@ -451,18 +504,15 @@ diamonds >> transmute(x_plus_y=X.x + X.y, y_div_z=(X.y / X.z)) >> head(3)
     >> summarize(price_mean=X.price.mean(), price_std=X.price.std())
 )
 
-# %%
+# %% {"slideshow": {"slide_type": "skip"}}
 (
     diamonds
     >> group_by(X.cut, X.color)
     >> summarize(price_mean=X.price.mean(), price_std=X.price.std())    
 )
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # Summarizing multiple columns with `summarize_each(function_list, *columns)`; can use your favorite indexing style for columns.
 
 # %%
 diamonds >> group_by(X.cut) >> summarize_each([np.mean, np.var], X.price, "depth", 5)
-
-# %%
-

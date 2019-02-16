@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # ---
 # jupyter:
+#   hide_input: false
 #   jupytext:
 #     metadata_filter:
 #       cells:
@@ -26,20 +27,52 @@
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
 #     version: 3.6.2
+#   toc:
+#     nav_menu: {}
+#     number_sections: true
+#     sideBar: true
+#     skip_h1_title: false
+#     toc_cell: false
+#     toc_position: {}
+#     toc_section_display: block
+#     toc_window_display: false
+#   varInspector:
+#     cols:
+#       lenName: 16
+#       lenType: 16
+#       lenVar: 40
+#     kernels_config:
+#       python:
+#         delete_cmd_postfix: ''
+#         delete_cmd_prefix: 'del '
+#         library: var_list.py
+#         varRefreshCmd: print(var_dic_list())
+#       r:
+#         delete_cmd_postfix: ') '
+#         delete_cmd_prefix: rm(
+#         library: var_list.r
+#         varRefreshCmd: 'cat(var_dic_list()) '
+#     types_to_exclude:
+#     - module
+#     - function
+#     - builtin_function_or_method
+#     - instance
+#     - _Feature
+#     window_display: false
 # ---
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Setting up Jupyter Lab/Notebook
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Caveats
 #
 # A few of the referenced functions (e.g., AnovaRM, Markdown calling Python variables, and anything involving live MATLAB or R code) require a little extra set up on one's personal machine, and will not run on a Binder instance of Jupyter. However, most everything else should.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Getting set up
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## [Install Anaconda](https://www.anaconda.com/download/)
 # - I'd recommend generally getting the latest version of Python; however, version 3.7 has some compatibility issues with some of my favorite packages, so I am sticking to 3.6 for now.
 # - Use commands like this to install multiple versions of python simultaneously:
@@ -58,7 +91,7 @@
 #     pip install jupyterhub
 #     ```
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ### Optional Psychopy environment (for behavioral scientists)
 # - You can even install an environment specifically for [Psychopy](https://www.psychopy.org/) to keep things tidy.
 # - Get the appropriate `.yml` file from [Gary Lupyan's github](https://github.com/lupyanlab/lab-computer/tree/master/anaconda-environments)
@@ -67,7 +100,7 @@
 # - After that you can always use it via `source activate psychopy` (no need for `source` on Windows)
 # - If `conda` has problems finding the version of the package listed in the `.yml` file, simply edit the file so that it isn't as specific in its version requirements for that package.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Install necessary packages
 # - `pip install insert_package_name_here`
 # - You might have to preface that with `sudo` if you're on a Mac.
@@ -75,18 +108,22 @@
 # - `conda install -c conda-forge insert_package_name_here` is also an option for certain packages.
 # - Can also get started with `pip install requirements.txt` if there is a particular environment you'd like (e.g., the one in this repo).
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Troubleshooting
 # In the event that for some reason your Jupyter instance of Python isn't seeing your installed packages, this means that it's probably pointing to the wrong Python or the wrong path. First, diagnose the problem in Jupyter by running `!which python` (on Mac/Linux; `!where python` on Windows) and `import sys; sys.path`. The first command checks where it's looking for Python itself (using the terminal), while the second says where it's looking for packages. These answers should look the same from your own terminal as well -- if the answers differ between Jupyter and your terminal, then you've found your problem.  
 # <br><br>
 # You should be able to fix either problem by activating your chosen environment, and running `python -m ipykernel install --user`
 
-# %% [markdown]
+# %% [markdown] {"hide_input": false, "slideshow": {"slide_type": "slide"}}
 # ## Useful packages
-# You're probably going to want the following packages (though some may already be installed via Anaconda):
-# - bokeh
-# - holoviews
-# - **ipypublish**
+# Depending on your goals, you may want some (or all) of the following packages. Some may already be installed via Anaconda.
+#
+# - some kind of plotting library
+#     - altair
+#     - bokeh
+#     - plotnine (for a Python port of ggplot)    
+#     - [pyviz](http://pyviz.org/)
+# - [**ipypublish**](https://github.com/chrisjsewell/ipypublish)
 #     - For generating scientific manuscripts with Jupyter.
 #     - Feel free to use my template and edits to this package available [here](https://github.com/stefanuddenberg/psipypublish).
 # - jupyter
@@ -109,11 +146,9 @@
 #     c.ContentsManager.default_notebook_metadata_filter = "all"
 #     c.ContentsManager.default_cell_metadata_filter = "all"
 #     ```
-
-# %% [markdown]
 # - **matlab_kernel** and **pymatbridge**
 #     - For using MATLAB
-#     - If pymatbridge doesn't work, go to MATLABROOT\extern\engines\python and run `python setup.py install`
+#     - If pymatbridge doesn't work, go to YOUR_MATLAB_ROOT\extern\engines\python and run `python setup.py install`
 # - matplotlib
 # - nbopen 
 #     - Used to associate .ipynb files with Jupyter in your file manager
@@ -134,14 +169,14 @@
 # - wes
 #     - Optional package for Wes Anderson-style color palettes
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Open Jupyter notebook from terminal or cmd
 # -  Use the commands `jupyter lab` or `jupyter notebook`
 #     - Make sure to cd into the directory you want to run it in (or at least a directory *higher* than the one you want; you can't go higher from within the notebook instance)
 #     - You can switch between views by navigating to `http://localhost:8888/lab` or `http://localhost:8888/tree` respectively.
 #     - The latest version of Jupyter lab at time of writing allows you to have a connected Python console to your notebook, and with [this repo](https://github.com/lckr/jupyterlab-variableInspector) you can even get a variable inspector (a la MATLAB or RStudio). While theming support isn't yet available for Jupyter lab, you can at least override the font settings for notebooks in the user settings.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Lab extensions
 # Enable useful extensions for Jupyter Lab. It's not as fully featured as Jupyter Notebook, and some may not work depending on your exact installation, but they are still useful.
 #
@@ -156,7 +191,7 @@
 # - [jupyterlab_bokeh](https://github.com/bokeh/jupyterlab_bokeh)
 # - [nbdime](https://github.com/jupyter/nbdime) — for diffing notebooks
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Notebook extensions (nbextensions)
 # Enable your favorite nbextensions for the Notebook view (mine are listed below).
 # - Tree Filter
@@ -188,7 +223,7 @@
 # - Hide input all
 #     - Check the documentation on these extensions to see how you can export to HTML and the like while respecting the hidden input!
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # ## Slideshow
 # You can turn any Jupyter notebook into a slideshow!
 # - Set up your slideshow layout for the notebook. From the toolbar: View --> Cell toolbar --> Slideshow
