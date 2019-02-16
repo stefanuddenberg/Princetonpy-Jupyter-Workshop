@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # ---
 # jupyter:
+#   celltoolbar: Slideshow
+#   hide_input: false
 #   jupytext:
 #     metadata_filter:
 #       cells:
@@ -26,12 +28,46 @@
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
 #     version: 3.6.2
+#   rise:
+#     theme: moon
+#   toc:
+#     nav_menu: {}
+#     number_sections: true
+#     sideBar: true
+#     skip_h1_title: false
+#     toc_cell: false
+#     toc_position: {}
+#     toc_section_display: block
+#     toc_window_display: false
+#   varInspector:
+#     cols:
+#       lenName: 16
+#       lenType: 16
+#       lenVar: 40
+#     kernels_config:
+#       python:
+#         delete_cmd_postfix: ''
+#         delete_cmd_prefix: 'del '
+#         library: var_list.py
+#         varRefreshCmd: print(var_dic_list())
+#       r:
+#         delete_cmd_postfix: ') '
+#         delete_cmd_prefix: rm(
+#         library: var_list.r
+#         varRefreshCmd: 'cat(var_dic_list()) '
+#     types_to_exclude:
+#     - module
+#     - function
+#     - builtin_function_or_method
+#     - instance
+#     - _Feature
+#     window_display: false
 # ---
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Imports
 
-# %%
+# %% {"format": "row"}
 # %reset -f
 # %matplotlib inline 
 # %config InlineBackend.figure_format = 'retina' # High-res graphs (rendered irrelevant by svg option below)
@@ -51,11 +87,11 @@ import seaborn as sns
 # from ipypublish.scripts.ipynb_latex_setup import *
 # from IPython.display import SVG, display, Markdown
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Matplotlib
 # The bread and butter for plotting in Python. See [here](https://matplotlib.org/tutorials/index.html) and [Ben Deverett's excellent notebook](https://github.com/bensondaled/princetonpy/tree/master/20181204) for tutorials.
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## xkcd Style Plots
 
 # %%
@@ -87,7 +123,7 @@ with plt.xkcd():
         '"Stove Ownership" from xkcd by Randall Monroe',
         ha='center')
 
-# %%
+# %% {"slideshow": {"slide_type": "subslide"}}
 with plt.xkcd():
     # Based on "The Data So Far" from XKCD by Randall Monroe
     # http://xkcd.com/373/
@@ -113,11 +149,11 @@ with plt.xkcd():
 
 plt.show()
 
-# %% [markdown] {"toc-hr-collapsed": false, "trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}, "toc-hr-collapsed": false}
 # # Seaborn
 # Wrapper around Matplotlib that makes plotting attractive figures easier.
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Changing color palette
 
 # %%
@@ -125,14 +161,14 @@ pal = sns.color_palette("husl", 8)  # optionally set number of colors
 sns.set_palette(pal)
 sns.palplot(sns.color_palette())
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Default Seaborn color palette
 
 # %%
 sns.set_palette("tab10")
 sns.palplot(sns.color_palette())
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Defining custom color palette
 
 # %%
@@ -140,7 +176,7 @@ flatui = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
 sns.set_palette(flatui)
 sns.palplot(sns.color_palette())
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Wes Anderson color palettes
 # You can generate these with the wes Python package. 
 #
@@ -151,7 +187,7 @@ import wes
 wes.available(show=True)
 # wes.set_palette('Darjeeling')
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Line plot
 
 # %%
@@ -179,7 +215,7 @@ with plt.xkcd():
     # Change axis labels
     ax.set(xlabel="X", ylabel="Y");
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Bar chart
 # Defaults to showing the 95% confidence interval.
 
@@ -187,7 +223,7 @@ with plt.xkcd():
 tips = sns.load_dataset("tips")
 ax = sns.barplot(x="day", y="total_bill", data=tips, capsize=0.1)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Subplots -- Violin plot with overlaid beeswarm plot
 
 # %%
@@ -203,7 +239,7 @@ ax = sns.violinplot(x="day", y="total_bill", data=tips, inner=None)
 ax = sns.swarmplot(x="day", y="total_bill", data=tips, color="white")
 ax.set(xlabel="Day of the Week", ylabel="Total Bill in $");
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Factor plots (catplot)
 
 # %%
@@ -290,45 +326,7 @@ set_legend(beeswarmPlot, legendEntries, 15)
 # barPlot.savefig("barPlot.svg") # can also use other extensions, like .png
 # beeswarmPlot.savefig("beePlot.svg")
 
-# %% [markdown] {"toc-hr-collapsed": false, "trusted": true}
-# # Altair
-
-# %% [markdown] {"trusted": true}
-# Declarative plotting library with a lot of useful chart types. Examples below are taken from [here](https://altair-viz.github.io/gallery/).
-
-# %% [markdown] {"trusted": true}
-# ## Simple scatterplot with tooltips
-
-# %%
-from vega_datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle(size=60).encode(
-    x="Horsepower",
-    y="Miles_per_Gallon",
-    color="Origin",
-    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
-).interactive()
-
-# %% [markdown] {"trusted": true}
-# ## Scatterplot matrix
-
-# %%
-from vega_datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle().encode(
-    alt.X(alt.repeat("column"), type="quantitative"),
-    alt.Y(alt.repeat("row"), type="quantitative"),
-    color="Origin:N",
-).properties(width=150, height=150).repeat(
-    row=["Horsepower", "Acceleration", "Miles_per_Gallon"],
-    column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
-).interactive()
-
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Layered histogram
 
 # %%
@@ -362,7 +360,7 @@ alt.Chart(source).mark_area(opacity=0.3, interpolate="step").encode(
     alt.Color("Experiment", scale=alt.Scale(range=["#0000ff", "#008000", "#ff0000"])),
 )
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Bokeh
 # Interactive visualization library leveraging JavaScript. [See here for a video tutorial](https://www.youtube.com/watch?v=9FlUFLmaWvY) and [here for a notebook with various visualizations](https://github.com/claresloggett/demo_visualisation_python/blob/master/Demo_Visualisation.ipynb), including some made with Bokeh.
 
@@ -375,7 +373,7 @@ this_plot.circle(x=tips["total_bill"], y=tips["tip"], size=10, alpha=0.7)
 output_notebook()  # to output inline
 show(this_plot)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## More interactive plot
 # Let's plot a scatterplot of tip amount vs. total bill, separately for men and women.
 #
@@ -429,25 +427,28 @@ this_plot.legend.click_policy = "hide"
 output_notebook()
 show(this_plot)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Pivot table plots
 
 # %%
 from pivottablejs import pivot_ui
 pivot_ui(tips)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Dash/Plotly
 # [Dash/Plotly](https://plot.ly/products/dash/) is another package for producing really nice and interactive graphs, but it requires signing up for an account to initialize it. After initialization you can use it online by default (which means all of your graphs get saved to the cloud for everyone to see forever) or you can use it offline (as demoed below). Examples taken or modified from [here](https://plot.ly/python/ipython-notebook-tutorial/).  
 #
 # I'm not familiar with the new Dash API that's been recently introduced, nor have I really explored using Plotly. I've been able to get everything that I need done in Matplotlib/Seaborn, so understand that the code snippets below may no longer work with recent versions of the Plotly package (which seems like a different thing to Dash).
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "skip"}}
 # ## Troubleshooting setup
 # When I first tried using plotly I sometimes got `IOPub data rate exceeded` errors. Here's how you fix that:
 #
 # - run `jupyter notebook --generate-config` to generate a clean configuration file with all parameters commented out
 # - modify `c.NotebookApp.iopub_data_rate_limit` and `c.NotebookApp.iopub_msg_rate_limit` to be some absurdly large numbers
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Simple line graph
 
 # %%
 import plotly
@@ -463,7 +464,7 @@ plotly.offline.iplot({
     "layout": Layout(title="hello world")
 })
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Tables
 
 # %%
@@ -475,7 +476,7 @@ df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/schoo
 table = ff.create_table(df)
 py.iplot(table, filename='plotly\table1')
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Bar graphs
 
 # %%
@@ -486,7 +487,7 @@ data = [Bar(x=df.School,
 
 py.iplot(data)
 
-# %%
+# %% {"slideshow": {"slide_type": "subslide"}}
 trace_women = Bar(x=df.School,
                   y=df.Women,
                   name='Women',
@@ -510,7 +511,7 @@ fig = Figure(data=data, layout=layout)
 
 py.iplot(fig)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Interactive Slider
 
 # %%
@@ -543,7 +544,7 @@ fig = dict(data=data, layout=layout)
 
 py.iplot(fig)
 
-# %% [markdown] {"trusted": true}
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Interactive 3D Plot
 
 # %%
@@ -586,7 +587,7 @@ layout = Layout(
 fig = Figure(data=data, layout=layout)
 py.iplot(fig)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # ggplot (plotnine)
 # If you have a background in R, you can use the plotnine library as a plug-in replacement for ggplot in Python. It has the same API you're familiar with. Combine with [dfply](https://github.com/kieferk/dfply) and pandas for a very good implementation of the tidyverse in Python.
 
@@ -601,8 +602,119 @@ iris = sns.load_dataset("iris")
     + geom_point()
 )
 
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # PyViz (holoviews)
+#
+# [See here for tutorial.](http://pyviz.org/tutorial/scipy18)
+
 # %% [markdown]
-# As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib.
+# ## Scatterplot matrix
+
+# %%
+import holoviews as hv
+import hvplot
+import hvplot.pandas
+hv.extension("bokeh") # use bokeh backend
+
+iris = sns.load_dataset("iris")
+hvplot.scatter_matrix(iris, c='species')
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Time series
+
+# %%
+# Get data
+diseases = pd.read_csv("data/diseases.csv.gz")
+diseases.head()
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ### Static plot with pandas
+
+# %%
+measles_by_year = diseases[["Year","measles"]].groupby("Year").aggregate(np.sum)
+measles_by_year.plot();
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ### Same thing with dfply
+
+# %% {"scrolled": false}
+from dfply import *
+measles_by_year = (
+    diseases
+    >> select(X.Year, X.measles)
+    >> group_by(X.Year)
+    >> summarize_each([np.sum], X.measles)
+)
+measles_by_year.set_index("Year", inplace=True)
+measles_by_year.plot();
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Interactive plot with holoviews
+
+# %%
+measles_by_year.hvplot()
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Annotating figure
+# Show when measles vaccine was introduced with a vertical line.
+
+# %% {"slideshow": {"slide_type": "-"}}
+vline = hv.VLine(1963).opts(color='black')
+g = measles_by_year.hvplot() * vline * \
+    hv.Text(1963, 27000, " Vaccine introduced", halign='left')
+g
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Dropdown menus
+
+# %%
+measles_agg = diseases.groupby(['Year', 'State'])['measles'].sum()
+measles_by_state = measles_agg.hvplot('Year', groupby='State', width=500, dynamic=False)
+
+measles_by_state * vline
+
+# %% [markdown] {"slideshow": {"slide_type": "slide"}, "toc-hr-collapsed": false}
+# # Altair
+
+# %% [markdown]
+# Declarative plotting library with a lot of useful chart types. Examples below are taken from [here](https://altair-viz.github.io/gallery/).
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Simple scatterplot with tooltips
+
+# %%
+from vega_datasets import data
+# Enable notebook renderer once per session
+# only necessary in jupyter notebook, not jupyter lab.
+alt.renderers.enable('notebook')
+
+cars = data.cars()
+
+alt.Chart(cars).mark_circle(size=60).encode(
+    x="Horsepower",
+    y="Miles_per_Gallon",
+    color="Origin",
+    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
+).interactive()
+
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# ## Scatterplot matrix
+
+# %%
+alt.Chart(cars).mark_circle().encode(
+    alt.X(alt.repeat("column"), type="quantitative"),
+    alt.Y(alt.repeat("row"), type="quantitative"),
+    color="Origin:N",
+).properties(width=150, height=150).repeat(
+    row=["Horsepower", "Acceleration", "Miles_per_Gallon"],
+    column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
+).interactive()
+
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # Conclusion
+
+# %% [markdown] {"slideshow": {"slide_type": "-"}}
+# As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality figures.
 
 # %%
 sns.pairplot(iris, hue="species");

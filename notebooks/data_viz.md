@@ -1,5 +1,7 @@
 ---
 jupyter:
+  celltoolbar: Slideshow
+  hide_input: false
   jupytext:
     metadata_filter:
       cells:
@@ -25,6 +27,40 @@ jupyter:
     nbconvert_exporter: python
     pygments_lexer: ipython3
     version: 3.6.2
+  rise:
+    theme: moon
+  toc:
+    nav_menu: {}
+    number_sections: true
+    sideBar: true
+    skip_h1_title: false
+    toc_cell: false
+    toc_position: {}
+    toc_section_display: block
+    toc_window_display: false
+  varInspector:
+    cols:
+      lenName: 16
+      lenType: 16
+      lenVar: 40
+    kernels_config:
+      python:
+        delete_cmd_postfix: ''
+        delete_cmd_prefix: 'del '
+        library: var_list.py
+        varRefreshCmd: print(var_dic_list())
+      r:
+        delete_cmd_postfix: ') '
+        delete_cmd_prefix: rm(
+        library: var_list.r
+        varRefreshCmd: 'cat(var_dic_list()) '
+    types_to_exclude:
+    - module
+    - function
+    - builtin_function_or_method
+    - instance
+    - _Feature
+    window_display: false
 ---
 
 # Imports
@@ -290,44 +326,6 @@ set_legend(beeswarmPlot, legendEntries, 15)
 # beeswarmPlot.savefig("beePlot.svg")
 ```
 
-# Altair
-
-
-Declarative plotting library with a lot of useful chart types. Examples below are taken from [here](https://altair-viz.github.io/gallery/).
-
-
-## Simple scatterplot with tooltips
-
-```python
-from vega_datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle(size=60).encode(
-    x="Horsepower",
-    y="Miles_per_Gallon",
-    color="Origin",
-    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
-).interactive()
-```
-
-## Scatterplot matrix
-
-```python
-from vega_datasets import data
-
-source = data.cars()
-
-alt.Chart(source).mark_circle().encode(
-    alt.X(alt.repeat("column"), type="quantitative"),
-    alt.Y(alt.repeat("row"), type="quantitative"),
-    color="Origin:N",
-).properties(width=150, height=150).repeat(
-    row=["Horsepower", "Acceleration", "Miles_per_Gallon"],
-    column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
-).interactive()
-```
-
 ## Layered histogram
 
 ```python
@@ -447,6 +445,9 @@ When I first tried using plotly I sometimes got `IOPub data rate exceeded` error
 
 - run `jupyter notebook --generate-config` to generate a clean configuration file with all parameters commented out
 - modify `c.NotebookApp.iopub_data_rate_limit` and `c.NotebookApp.iopub_msg_rate_limit` to be some absurdly large numbers
+
+
+## Simple line graph
 
 ```python
 import plotly
@@ -602,7 +603,118 @@ iris = sns.load_dataset("iris")
 )
 ```
 
-As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib.
+# PyViz (holoviews)
+
+[See here for tutorial.](http://pyviz.org/tutorial/scipy18)
+
+
+## Scatterplot matrix
+
+```python
+import holoviews as hv
+import hvplot
+import hvplot.pandas
+hv.extension("bokeh") # use bokeh backend
+
+iris = sns.load_dataset("iris")
+hvplot.scatter_matrix(iris, c='species')
+```
+
+## Time series
+
+```python
+# Get data
+diseases = pd.read_csv("data/diseases.csv.gz")
+diseases.head()
+```
+
+### Static plot with pandas
+
+```python
+measles_by_year = diseases[["Year","measles"]].groupby("Year").aggregate(np.sum)
+measles_by_year.plot();
+```
+
+### Same thing with dfply
+
+```python
+from dfply import *
+measles_by_year = (
+    diseases
+    >> select(X.Year, X.measles)
+    >> group_by(X.Year)
+    >> summarize_each([np.sum], X.measles)
+)
+measles_by_year.set_index("Year", inplace=True)
+measles_by_year.plot();
+```
+
+## Interactive plot with holoviews
+
+```python
+measles_by_year.hvplot()
+```
+
+## Annotating figure
+Show when measles vaccine was introduced with a vertical line.
+
+```python
+vline = hv.VLine(1963).opts(color='black')
+g = measles_by_year.hvplot() * vline * \
+    hv.Text(1963, 27000, " Vaccine introduced", halign='left')
+g
+```
+
+## Dropdown menus
+
+```python
+measles_agg = diseases.groupby(['Year', 'State'])['measles'].sum()
+measles_by_state = measles_agg.hvplot('Year', groupby='State', width=500, dynamic=False)
+
+measles_by_state * vline
+```
+
+# Altair
+
+
+Declarative plotting library with a lot of useful chart types. Examples below are taken from [here](https://altair-viz.github.io/gallery/).
+
+
+## Simple scatterplot with tooltips
+
+```python
+from vega_datasets import data
+# Enable notebook renderer once per session
+# only necessary in jupyter notebook, not jupyter lab.
+alt.renderers.enable('notebook')
+
+cars = data.cars()
+
+alt.Chart(cars).mark_circle(size=60).encode(
+    x="Horsepower",
+    y="Miles_per_Gallon",
+    color="Origin",
+    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
+).interactive()
+```
+
+## Scatterplot matrix
+
+```python
+alt.Chart(cars).mark_circle().encode(
+    alt.X(alt.repeat("column"), type="quantitative"),
+    alt.Y(alt.repeat("row"), type="quantitative"),
+    color="Origin:N",
+).properties(width=150, height=150).repeat(
+    row=["Horsepower", "Acceleration", "Miles_per_Gallon"],
+    column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
+).interactive()
+```
+
+# Conclusion
+
+
+As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality figures.
 
 ```python
 sns.pairplot(iris, hue="species");
