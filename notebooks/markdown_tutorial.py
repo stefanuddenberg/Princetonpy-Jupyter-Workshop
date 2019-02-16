@@ -1,5 +1,6 @@
 # ---
 # jupyter:
+#   hide_input: false
 #   jupytext:
 #     metadata_filter:
 #       cells:
@@ -25,21 +26,60 @@
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
 #     version: 3.6.2
+#   rise:
+#     theme: moon
+#   toc:
+#     nav_menu: {}
+#     number_sections: true
+#     sideBar: true
+#     skip_h1_title: false
+#     toc_cell: false
+#     toc_position:
+#       height: 875px
+#       left: 0px
+#       right: 1728.63px
+#       top: 88px
+#       width: 191.375px
+#     toc_section_display: block
+#     toc_window_display: false
+#   varInspector:
+#     cols:
+#       lenName: 16
+#       lenType: 16
+#       lenVar: 40
+#     kernels_config:
+#       python:
+#         delete_cmd_postfix: ''
+#         delete_cmd_prefix: 'del '
+#         library: var_list.py
+#         varRefreshCmd: print(var_dic_list())
+#       r:
+#         delete_cmd_postfix: ') '
+#         delete_cmd_prefix: rm(
+#         library: var_list.r
+#         varRefreshCmd: 'cat(var_dic_list()) '
+#     types_to_exclude:
+#     - module
+#     - function
+#     - builtin_function_or_method
+#     - instance
+#     - _Feature
+#     window_display: false
 # ---
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Markdown Tutorial
 # Double-click on cells to see how they were written!
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Headings
 # Headings are made with preceding "#" signs. `<h1>` is #, `<h2>` is ##, etc.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # White space
 # Force new blank lines with `<br>` . Can also place two empty spaces at the end of a line to force a line break.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Emphasis
 # *Italics* are made by surrounding a word or phrase with asterisks, or with underscores, _like so_.
 # <br>
@@ -49,23 +89,24 @@
 #
 # **_You can make a phrase both bold and italic_** by combining the above, or by using 3 stars/underscores instead.
 
-# %% [markdown]
-# # Unordered Lists
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # Lists
+# ## Unordered Lists
 # - Dashes make bullets
 #     - And tabbing first makes a sub-bullet
 #         - You can also just use a single space instead of a tab character; just be consistent.
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Ordered Lists
 # 1. You can make ordered lists with a number followed by a dot.
 # 2. Here's another point. 
 
-# %% [markdown]
-# ## Blockquotes
+# %% [markdown] {"slideshow": {"slide_type": "subslide"}}
+# # Blockquotes
 # > Put a ">" before a line to turn it into a blockquote. 
 
-# %% [markdown]
-# ## Code 
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # Code 
 # Unhighlighted code goes between backticks: `this is code`
 # <br>
 #
@@ -78,8 +119,8 @@
 #     print(i)
 # ```
 
-# %% [markdown]
-# ## Hyperlinks and images
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
+# # Hyperlinks and images
 # [Hyperlinks go in square brackets](https://www.wikiwand.com/en/Kaizen), with the link itself going in parentheses immediately after (no whitespace allowed between neighboring brackets)!
 # <br><br>
 #
@@ -87,21 +128,21 @@
 # <br><br>
 # ![Princeton Psychology Department](https://www.onlinepsychologydegree.info/wp-content/uploads/2015/01/princeton.jpg)
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Embed HTML, including video
 
 # %%
 # %%HTML
 <iframe width='560' height='315' src='https://www.youtube.com/embed/HW29067qVWk' frameborder='0' allowfullscreen></iframe>
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Live website embedding
 
 # %%
 # # %%HTML
-# <iframe src="https://fiddle.jshell.net/rahonavis75/ed4486f9/show/" width="800" height="500">
+# <iframe src="https://jsfiddle.net/rahonavis75/zpjg8rc4/show/" width="800" height="650">
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Latex
 # Sandwich your LaTeX between two dollar signs. 
 # <br>
@@ -111,12 +152,12 @@
 # \end{equation*}
 # $$
 
-# %% [markdown]
+# %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Embedding Python code in Markdown
 # Note that this only works in Jupyter Notebook (not Lab) and only if you have Latex and [Python Markdown](https://jupyter-contrib-nbextensions.readthedocs.io/en/latest/nbextensions/python-markdown/readme.html) correctly configured.
 
 # %%
 foo = 100
 
-# %% [markdown]
+# %% [markdown] {"variables": {"foo": "100"}}
 # The value of `foo` is {{foo}}

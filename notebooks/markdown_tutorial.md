@@ -1,5 +1,6 @@
 ---
 jupyter:
+  hide_input: false
   jupytext:
     metadata_filter:
       cells:
@@ -25,6 +26,45 @@ jupyter:
     nbconvert_exporter: python
     pygments_lexer: ipython3
     version: 3.6.2
+  rise:
+    theme: moon
+  toc:
+    nav_menu: {}
+    number_sections: true
+    sideBar: true
+    skip_h1_title: false
+    toc_cell: false
+    toc_position:
+      height: 875px
+      left: 0px
+      right: 1728.63px
+      top: 88px
+      width: 191.375px
+    toc_section_display: block
+    toc_window_display: false
+  varInspector:
+    cols:
+      lenName: 16
+      lenType: 16
+      lenVar: 40
+    kernels_config:
+      python:
+        delete_cmd_postfix: ''
+        delete_cmd_prefix: 'del '
+        library: var_list.py
+        varRefreshCmd: print(var_dic_list())
+      r:
+        delete_cmd_postfix: ') '
+        delete_cmd_prefix: rm(
+        library: var_list.r
+        varRefreshCmd: 'cat(var_dic_list()) '
+    types_to_exclude:
+    - module
+    - function
+    - builtin_function_or_method
+    - instance
+    - _Feature
+    window_display: false
 ---
 
 # Markdown Tutorial
@@ -49,7 +89,8 @@ Force new blank lines with `<br>` . Can also place two empty spaces at the end o
 **_You can make a phrase both bold and italic_** by combining the above, or by using 3 stars/underscores instead.
 
 
-# Unordered Lists
+# Lists
+## Unordered Lists
 - Dashes make bullets
     - And tabbing first makes a sub-bullet
         - You can also just use a single space instead of a tab character; just be consistent.
@@ -60,11 +101,11 @@ Force new blank lines with `<br>` . Can also place two empty spaces at the end o
 2. Here's another point. 
 
 
-## Blockquotes
+# Blockquotes
 > Put a ">" before a line to turn it into a blockquote. 
 
 
-## Code 
+# Code 
 Unhighlighted code goes between backticks: `this is code`
 <br>
 
@@ -78,7 +119,7 @@ for i in x:
 # ```
 
 
-## Hyperlinks and images
+# Hyperlinks and images
 [Hyperlinks go in square brackets](https://www.wikiwand.com/en/Kaizen), with the link itself going in parentheses immediately after (no whitespace allowed between neighboring brackets)!
 <br><br>
 
@@ -98,7 +139,7 @@ Images are set up just like hyperlinks, but with an exclamation point in front. 
 
 ```python
 # %%HTML
-# <iframe src="https://fiddle.jshell.net/rahonavis75/ed4486f9/show/" width="800" height="500">
+# <iframe src="https://jsfiddle.net/rahonavis75/zpjg8rc4/show/" width="800" height="650">
 ```
 
 # Latex
