@@ -26,7 +26,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.2
+#     version: 3.6.7
 #   toc:
 #     nav_menu:
 #       height: 162px
@@ -305,7 +305,7 @@ def report_t_test(df, t, p, d, alpha=0.001):
 
 report_t_test(df, t, p, d)
 
-# %% [markdown] {"slideshow": {"slide_type": "-"}, "variables": {"n-2": "242", "format(t, '.2f').lstrip('0')": "1.39", "inequality</em>symbol": "<p><strong>SyntaxError</strong>: invalid syntax (<ipython-input-71-c4d8463e4db3>, line 1)</p>\n", "format(p, '.3f').lstrip('0')": ".166", "format(d, '.3f').lstrip('0')": ".178"}}
+# %% [markdown] {"slideshow": {"slide_type": "-"}, "variables": {"format(d, '.3f').lstrip('0')": ".178", "format(p, '.3f').lstrip('0')": ".166", "format(t, '.2f').lstrip('0')": "1.39", "inequality</em>symbol": "<p><strong>SyntaxError</strong>: invalid syntax (<ipython-input-71-c4d8463e4db3>, line 1)</p>\n", "n-2": "242"}}
 # And in plain markdown:
 # _t_({{n-2}})={{format(t, '.2f').lstrip('0')}}, *p*{{inequality_symbol}}{{format(p, '.3f').lstrip('0')}}, *d*={{format(d, '.3f').lstrip('0')}}
 #

@@ -27,7 +27,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.2
+#     version: 3.6.7
 #   rise:
 #     theme: moon
 #   toc:
@@ -67,7 +67,7 @@
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Imports
 
-# %% {"format": "row"}
+# %%
 # %reset -f
 # %matplotlib inline 
 # %config InlineBackend.figure_format = 'retina' # High-res graphs (rendered irrelevant by svg option below)
@@ -454,7 +454,7 @@ pivot_ui(tips)
 import plotly
 # initialize with your credentials -- only need to do once ever in life, 
 # not even once per notebook.
-# plotly.tools.set_credentials_file(username='XXX', api_key='XXX') 
+# plotly.tools.set_credentials_file(username="XXX", api_key="XXX") 
 from plotly.graph_objs import Scatter, Layout
 
 plotly.offline.init_notebook_mode(connected=True)
@@ -517,7 +517,7 @@ py.iplot(fig)
 # %%
 data = [dict(
         visible = False,
-        line=dict(color='00CED1', width=6),
+        line=dict(color='#00CED1', width=6),
         name = '𝜈 = '+str(step),
         x = np.arange(0,10,0.01),
         y = np.sin(step*np.arange(0,10,0.01))) for step in np.arange(0,5,0.1)]
@@ -684,6 +684,7 @@ measles_by_state * vline
 
 # %%
 from vega_datasets import data
+
 # Enable notebook renderer once per session
 # only necessary in jupyter notebook, not jupyter lab.
 alt.renderers.enable('notebook')

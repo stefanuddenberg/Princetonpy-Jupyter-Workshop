@@ -25,7 +25,7 @@ jupyter:
     name: python
     nbconvert_exporter: python
     pygments_lexer: ipython3
-    version: 3.6.2
+    version: 3.6.7
   rise:
     theme: moon
   toc:
