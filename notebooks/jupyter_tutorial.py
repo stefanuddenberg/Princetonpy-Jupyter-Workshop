@@ -124,6 +124,15 @@
 # </div>
 
 # %% [markdown]
+# # Useful extensions
+# - [Manager](https://github.com/jupyter-widgets/ipywidgets/tree/master/packages/jupyterlab-manager)
+# - [Variable inspector](https://github.com/lckr/jupyterlab-variableInspector): a must have for a more complete IDE experience.
+# - [LaTeX support](https://github.com/jupyterlab/jupyterlab-latex)
+# - [Plotly](https://github.com/jupyterlab/jupyter-renderers)
+# - [Table of contents](https://github.com/jupyterlab/jupyterlab-toc)
+# - [PyViz](https://github.com/pyviz/pyviz_comms)
+
+# %% [markdown]
 # # Debugging in Jupyter Notebooks
 # Use `set_trace()` where you want the debugger to start.<br>
 # 'n' moves onto the next line<br>
