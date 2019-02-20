@@ -63,7 +63,29 @@ jupyter:
     window_display: false
 ---
 
-# Jupyter Tutorial
+# Jupyter Lab Tutorial
+
+
+# Window notes
+At the far left of the screen you can click on the associated icons to see:
+- the file browser (which works like a fully functioning file browser)
+- which notebooks are currently running
+- the command palette
+- cell metadata
+- open tabs
+- and more (if you have extensions installed)
+
+
+# Kernels
+Using the main launcher view, you can create a new terminal or new notebooks for any kernel you have installed. There are [over 120 kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) available. These include R, MATLAB, and Julia.  
+
+You can make a new tab by pressing the `+` button toward the top left of the screen. 
+
+
+# Views
+- Open and view multiple files at once by simply dragging tabs into different sides or corners of the body of the window.
+- Open multiple views into the same file by right clicking on the tab and selecting "New View for Notebook".
+- Open a dedicated view into the output of a cell by right-clicking on the output and selecting "Create New View for Output".
 
 
 # Cells
@@ -81,9 +103,9 @@ jupyter:
 
 # Helpful shortcuts
 All of the below commands are for Windows installations. Mac will likely substitute `Cmd` for `Ctrl`.
-- While coding, `SHIFT+TAB` will bring up help for your current function
+- While coding, `Shift+Tab` will bring up help for your current function
 - `Ctrl+Enter` executes the current cell, keeping your focus on it
-- `Ctrl+Shift+Enter` executes the current cell, and moves you down to the next cell
+- `Shift+Enter` executes the current cell, and moves you down to the next cell
 - `Alt+Enter` executes the current cell AND makes a new one below
 - `Esc` brings you to command mode, where you can do a number of things:
     - `A` makes a new cell above
@@ -92,9 +114,9 @@ All of the below commands are for Windows installations. Mac will likely substit
     - `X` cuts selected cells
     - `C` copies the cells
     - `V` pastes the cells
-    - `Y` turns the cell into code
-    - `M` turns the cell into Markdown
-- `CTRL+SHIFT+F` brings up the command palette, with all available commands
+    - `Y` turns the cell into a code cell
+    - `M` turns the cell into a markdown cell
+- Jupyter notebook only: `CTRL+SHIFT+P` brings up the command palette, with all available commands
 
 <div class="alert alert-block alert-info">
 You can also view and edit such shortcuts from the "Help" menu at the top of the screen in the notebook view, or with the art palette icon at the left of the screen in the lab view.
