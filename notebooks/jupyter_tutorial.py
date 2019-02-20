@@ -25,7 +25,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.7
+#     version: 3.6.2
 #   toc:
 #     base_numbering: 1
 #     nav_menu: {}
@@ -143,3 +143,7 @@ lsmagic
 
 # %%
 !conda --version
+
+# %% [markdown]
+# # Other resources
+# See [here] for a long video tutorial introduction to Jupyter lab. Attendant notebooks can be found [here](https://github.com/jupyterlab/scipy2018-jupyterlab-tutorial).

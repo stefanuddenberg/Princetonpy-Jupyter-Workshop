@@ -27,14 +27,17 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.2
+#     version: 3.6.7
 #   rise:
 #     theme: moon
 #   toc:
+#     base_numbering: 1
 #     nav_menu: {}
 #     number_sections: true
 #     sideBar: true
 #     skip_h1_title: false
+#     title_cell: Table of Contents
+#     title_sidebar: Contents
 #     toc_cell: false
 #     toc_position: {}
 #     toc_section_display: block
@@ -67,15 +70,15 @@
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Imports
 
-# %% {"format": "row"}
+# %%
 # %reset -f
 # %matplotlib inline 
-# %config InlineBackend.figure_format = 'retina' # High-res graphs (rendered irrelevant by svg option below)
-# %config InlineBackend.print_figure_kwargs = {'bbox_inches':'tight'} # No extra white space
-# %config InlineBackend.figure_format = 'svg' # 'png' is default
+# %config InlineBackend.figure_format = "retina" # High-res graphs (rendered irrelevant by svg option below)
+# %config InlineBackend.print_figure_kwargs = {"bbox_inches": "tight"} # No extra white space
+# %config InlineBackend.figure_format = "svg" # "png" is default
  
 import warnings
-warnings.filterwarnings('ignore') # Because we are adults
+warnings.filterwarnings("ignore") # Because we are adults
 from IPython.core.debugger import set_trace
 import altair as alt
 import matplotlib.pyplot as plt
@@ -515,34 +518,33 @@ py.iplot(fig)
 # # Interactive Slider
 
 # %%
-data = [dict(
-        visible = False,
-        line=dict(color='00CED1', width=6),
-        name = '𝜈 = '+str(step),
-        x = np.arange(0,10,0.01),
-        y = np.sin(step*np.arange(0,10,0.01))) for step in np.arange(0,5,0.1)]
-data[10]['visible'] = True
+data = [
+    dict(
+        visible=False,
+        line=dict(color="#00CED1", width=6),
+        name="𝜈 = " + str(step),
+        x=np.arange(0, 10, 0.01),
+        y=np.sin(step * np.arange(0, 10, 0.01)),
+    )
+    for step in np.arange(0, 5, 0.1)
+]
+data[10]["visible"] = True
 
 steps = []
 for i in range(len(data)):
-    step = dict(
-        method = 'restyle',
-        args = ['visible', [False] * len(data)],
-    )
-    step['args'][1][i] = True # Toggle i'th trace to "visible"
+    step = dict(method="restyle", args=["visible", [False] * len(data)])
+    step["args"][1][i] = True  # Toggle i'th trace to "visible"
     steps.append(step)
 
-sliders = [dict(
-    active = 10,
-    currentvalue = {"prefix": "Frequency: "},
-    pad = {"t": 50},
-    steps = steps
-)]
+sliders = [
+    dict(active=10, currentvalue={"prefix": "Frequency: "}, pad={"t": 50}, steps=steps)
+]
 
 layout = dict(sliders=sliders)
 fig = dict(data=data, layout=layout)
 
 py.iplot(fig)
+
 
 # %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Interactive 3D Plot
@@ -555,37 +557,38 @@ tGrid, sGrid = np.meshgrid(s, t)
 r = 2 + np.sin(7 * sGrid + 5 * tGrid)  # r = 2 + sin(7s+5t)
 x = r * np.cos(sGrid) * np.sin(tGrid)  # x = r*cos(s)*sin(t)
 y = r * np.sin(sGrid) * np.sin(tGrid)  # y = r*sin(s)*sin(t)
-z = r * np.cos(tGrid)                  # z = r*cos(t)
+z = r * np.cos(tGrid)  # z = r*cos(t)
 
 surface = Surface(x=x, y=y, z=z)
 data = Data([surface])
 
 layout = Layout(
-    title='Parametric Plot',
+    title="Parametric Plot",
     scene=Scene(
         xaxis=XAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
+            backgroundcolor="rgb(230, 230,230)",
         ),
         yaxis=YAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
+            backgroundcolor="rgb(230, 230,230)",
         ),
         zaxis=ZAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
-        )
-    )
+            backgroundcolor="rgb(230, 230,230)",
+        ),
+    ),
 )
 
 fig = Figure(data=data, layout=layout)
 py.iplot(fig)
+
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # ggplot (plotnine)
@@ -601,6 +604,7 @@ iris = sns.load_dataset("iris")
     + aes(x="sepal_length", y="petal_length", colour="species")
     + geom_point()
 )
+
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # PyViz (holoviews)
@@ -684,18 +688,42 @@ measles_by_state * vline
 
 # %%
 from vega_datasets import data
+
 # Enable notebook renderer once per session
 # only necessary in jupyter notebook, not jupyter lab.
-alt.renderers.enable('notebook')
+# alt.renderers.enable("notebook")
 
 cars = data.cars()
 
 alt.Chart(cars).mark_circle(size=60).encode(
-    x="Horsepower",
-    y="Miles_per_Gallon",
+    x="Miles_per_Gallon",
+    y="Horsepower",
     color="Origin",
     tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
 ).interactive()
+
+# %% [markdown]
+# ## Interval selection
+
+# %%
+# Can choose just x, just y, or both as below for interval
+interval = alt.selection_interval(encodings=["x", "y"])
+
+chart = alt.Chart(cars).mark_circle(size=60).encode(
+    x="Miles_per_Gallon",
+    y="Horsepower",
+    color=alt.condition(interval, "Origin", alt.value("lightgray")),
+    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
+).properties(
+    selection=interval
+)
+
+# %% [markdown]
+# ## Placing figures side by side with `|`
+# The figures will be linked.
+
+# %%
+concatenated_chart = chart | chart.encode(x="Acceleration")
 
 # %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Scatterplot matrix
@@ -710,11 +738,17 @@ alt.Chart(cars).mark_circle().encode(
     column=["Miles_per_Gallon", "Acceleration", "Horsepower"],
 ).interactive()
 
+# %% [markdown]
+# ## Exporting to HTML
+
+# %%
+concatenated_chart.save("concat.html")
+
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Conclusion
 
 # %% [markdown] {"slideshow": {"slide_type": "-"}}
-# As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality figures.
+# As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality static figures (but I'm very excited about the possibilities Altair brings to data exploration).
 
 # %%
 sns.pairplot(iris, hue="species");

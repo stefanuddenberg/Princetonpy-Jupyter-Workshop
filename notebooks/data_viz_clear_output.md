@@ -30,10 +30,13 @@ jupyter:
   rise:
     theme: moon
   toc:
+    base_numbering: 1
     nav_menu: {}
     number_sections: true
     sideBar: true
     skip_h1_title: false
+    title_cell: Table of Contents
+    title_sidebar: Contents
     toc_cell: false
     toc_position: {}
     toc_section_display: block
@@ -68,12 +71,12 @@ jupyter:
 ```python
 %reset -f
 %matplotlib inline 
-%config InlineBackend.figure_format = 'retina' # High-res graphs (rendered irrelevant by svg option below)
-%config InlineBackend.print_figure_kwargs = {'bbox_inches':'tight'} # No extra white space
-%config InlineBackend.figure_format = 'svg' # 'png' is default
+%config InlineBackend.figure_format = "retina" # High-res graphs (rendered irrelevant by svg option below)
+%config InlineBackend.print_figure_kwargs = {"bbox_inches": "tight"} # No extra white space
+%config InlineBackend.figure_format = "svg" # "png" is default
  
 import warnings
-warnings.filterwarnings('ignore') # Because we are adults
+warnings.filterwarnings("ignore") # Because we are adults
 from IPython.core.debugger import set_trace
 import altair as alt
 import matplotlib.pyplot as plt
@@ -453,7 +456,7 @@ When I first tried using plotly I sometimes got `IOPub data rate exceeded` error
 import plotly
 # initialize with your credentials -- only need to do once ever in life, 
 # not even once per notebook.
-# plotly.tools.set_credentials_file(username="XXX", api_key="XXX") 
+# plotly.tools.set_credentials_file(username='XXX', api_key='XXX') 
 from plotly.graph_objs import Scatter, Layout
 
 plotly.offline.init_notebook_mode(connected=True)
@@ -515,34 +518,33 @@ py.iplot(fig)
 # Interactive Slider
 
 ```python
-data = [dict(
-        visible = False,
-        line=dict(color='#00CED1', width=6),
-        name = '𝜈 = '+str(step),
-        x = np.arange(0,10,0.01),
-        y = np.sin(step*np.arange(0,10,0.01))) for step in np.arange(0,5,0.1)]
-data[10]['visible'] = True
+data = [
+    dict(
+        visible=False,
+        line=dict(color="#00CED1", width=6),
+        name="𝜈 = " + str(step),
+        x=np.arange(0, 10, 0.01),
+        y=np.sin(step * np.arange(0, 10, 0.01)),
+    )
+    for step in np.arange(0, 5, 0.1)
+]
+data[10]["visible"] = True
 
 steps = []
 for i in range(len(data)):
-    step = dict(
-        method = 'restyle',
-        args = ['visible', [False] * len(data)],
-    )
-    step['args'][1][i] = True # Toggle i'th trace to "visible"
+    step = dict(method="restyle", args=["visible", [False] * len(data)])
+    step["args"][1][i] = True  # Toggle i'th trace to "visible"
     steps.append(step)
 
-sliders = [dict(
-    active = 10,
-    currentvalue = {"prefix": "Frequency: "},
-    pad = {"t": 50},
-    steps = steps
-)]
+sliders = [
+    dict(active=10, currentvalue={"prefix": "Frequency: "}, pad={"t": 50}, steps=steps)
+]
 
 layout = dict(sliders=sliders)
 fig = dict(data=data, layout=layout)
 
 py.iplot(fig)
+
 ```
 
 ## Interactive 3D Plot
@@ -555,37 +557,38 @@ tGrid, sGrid = np.meshgrid(s, t)
 r = 2 + np.sin(7 * sGrid + 5 * tGrid)  # r = 2 + sin(7s+5t)
 x = r * np.cos(sGrid) * np.sin(tGrid)  # x = r*cos(s)*sin(t)
 y = r * np.sin(sGrid) * np.sin(tGrid)  # y = r*sin(s)*sin(t)
-z = r * np.cos(tGrid)                  # z = r*cos(t)
+z = r * np.cos(tGrid)  # z = r*cos(t)
 
 surface = Surface(x=x, y=y, z=z)
 data = Data([surface])
 
 layout = Layout(
-    title='Parametric Plot',
+    title="Parametric Plot",
     scene=Scene(
         xaxis=XAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
+            backgroundcolor="rgb(230, 230,230)",
         ),
         yaxis=YAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
+            backgroundcolor="rgb(230, 230,230)",
         ),
         zaxis=ZAxis(
-            gridcolor='rgb(255, 255, 255)',
-            zerolinecolor='rgb(255, 255, 255)',
+            gridcolor="rgb(255, 255, 255)",
+            zerolinecolor="rgb(255, 255, 255)",
             showbackground=True,
-            backgroundcolor='rgb(230, 230,230)'
-        )
-    )
+            backgroundcolor="rgb(230, 230,230)",
+        ),
+    ),
 )
 
 fig = Figure(data=data, layout=layout)
 py.iplot(fig)
+
 ```
 
 # ggplot (plotnine)
@@ -601,6 +604,7 @@ iris = sns.load_dataset("iris")
     + aes(x="sepal_length", y="petal_length", colour="species")
     + geom_point()
 )
+
 ```
 
 # PyViz (holoviews)
@@ -687,16 +691,39 @@ from vega_datasets import data
 
 # Enable notebook renderer once per session
 # only necessary in jupyter notebook, not jupyter lab.
-alt.renderers.enable('notebook')
+# alt.renderers.enable("notebook")
 
 cars = data.cars()
 
 alt.Chart(cars).mark_circle(size=60).encode(
-    x="Horsepower",
-    y="Miles_per_Gallon",
+    x="Miles_per_Gallon",
+    y="Horsepower",
     color="Origin",
     tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
 ).interactive()
+```
+
+## Interval selection
+
+```python
+# Can choose just x, just y, or both as below for interval
+interval = alt.selection_interval(encodings=["x", "y"])
+
+chart = alt.Chart(cars).mark_circle(size=60).encode(
+    x="Miles_per_Gallon",
+    y="Horsepower",
+    color=alt.condition(interval, "Origin", alt.value("lightgray")),
+    tooltip=["Name", "Origin", "Horsepower", "Miles_per_Gallon"],
+).properties(
+    selection=interval
+)
+```
+
+## Placing figures side by side with `|`
+The figures will be linked.
+
+```python
+concatenated_chart = chart | chart.encode(x="Acceleration")
 ```
 
 ## Scatterplot matrix
@@ -712,10 +739,16 @@ alt.Chart(cars).mark_circle().encode(
 ).interactive()
 ```
 
+## Exporting to HTML
+
+```python
+concatenated_chart.save("concat.html")
+```
+
 # Conclusion
 
 
-As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality figures.
+As you can see, there is no shortage of powerful visualization options in Python. That said, I'm still partial to seaborn and matplotlib for making publication-quality static figures (but I'm very excited about the possibilities Altair brings to data exploration).
 
 ```python
 sns.pairplot(iris, hue="species");
