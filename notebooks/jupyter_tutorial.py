@@ -146,4 +146,4 @@ lsmagic
 
 # %% [markdown]
 # # Other resources
-# See [here] for a long video tutorial introduction to Jupyter lab. Attendant notebooks can be found [here](https://github.com/jupyterlab/scipy2018-jupyterlab-tutorial).
+# See [here](https://www.youtube.com/watch?v=Gzun8PpyBCo) for a long (but excellent) video tutorial introduction to Jupyter lab. Attendant notebooks can be found [here](https://github.com/jupyterlab/scipy2018-jupyterlab-tutorial).
