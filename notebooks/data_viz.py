@@ -27,7 +27,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.7
+#     version: 3.7.2
 #   rise:
 #     theme: moon
 #   toc:
@@ -517,7 +517,7 @@ py.iplot(fig)
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Interactive Slider
 
-# %%
+# %% {"lines_to_next_cell": 2}
 data = [
     dict(
         visible=False,
@@ -549,7 +549,7 @@ py.iplot(fig)
 # %% [markdown] {"slideshow": {"slide_type": "subslide"}}
 # ## Interactive 3D Plot
 
-# %%
+# %% {"lines_to_next_cell": 2}
 s = np.linspace(0, 2 * np.pi, 240)
 t = np.linspace(0, np.pi, 240)
 tGrid, sGrid = np.meshgrid(s, t)
@@ -594,7 +594,7 @@ py.iplot(fig)
 # # ggplot (plotnine)
 # If you have a background in R, you can use the plotnine library as a plug-in replacement for ggplot in Python. It has the same API you're familiar with. Combine with [dfply](https://github.com/kieferk/dfply) and pandas for a very good implementation of the tidyverse in Python.
 
-# %%
+# %% {"lines_to_next_cell": 2}
 from plotnine import *
 
 iris = sns.load_dataset("iris")

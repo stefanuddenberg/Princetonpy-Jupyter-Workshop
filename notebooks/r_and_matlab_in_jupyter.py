@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # ---
 # jupyter:
 #   hide_input: false
@@ -26,7 +25,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.7
+#     version: 3.7.2
 #   rise:
 #     theme: moon
 #   toc:
@@ -78,17 +77,20 @@
 # If that didn't work, go through these steps:
 # - In R (not RStudio), run the following:
 # ```R
-# install.packages('devtools')
+# install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
 # devtools::install_github('IRkernel/IRkernel')
 # IRkernel::installspec()  # to register the kernel in the current R installation
 # ```
-# - make sure you have R added to your PATH (in my case, C:\Program Files\R\R-3.3.3\bin\x64)
-#     - _Windows_: Need R_HOME (same path as above) and R_USER (just your windows user name) added as separate environment vars
+# - Install the interface between R and Python in terminal with:
+# ```
+# conda install -c r r-essentials
+# conda install rpy2
+# ```
+# - make sure you have R added to your PATH (in my case, `C:\Program Files\R\R-3.4.1\bin\x64`)
+#     - _Windows_: Need `R_HOME` (same path as above, minus `\bin\x64`) and `R_USER` (just your windows user name) added as separate environment variables.
+#     - _Windows_: You may also need to add the following two directories to your PATH: `C:\Anaconda3\Library\mingw-w64\bin; C:\Anaconda3\Library\mingw-w64\lib`
 # - Install libraries like ggplot2 directly into R itself, not RStudio: `install.packages('ggplot2', dependencies=TRUE)`
-# - _Mac/Linux_: Run `pip install rpy2` from your command line/terminal
-#     - _Windows_: [get appropriate installation from here](http://www.lfd.uci.edu/~gohlke/pythonlibs/#rpy2), and run `pip install rpy2‑2.8.6‑cp36‑cp36m‑win_amd64.whl` or whatever your .whl file is called from within the directory that has the file.
-#         - You may also need to add the following two directories to your PATH: C:\Anaconda3\Library\mingw-w64\bin; C:\Anaconda3\Library\mingw-w64\lib
-# - [See here for further information if needed](https://github.com/IRkernel/IRkernel)
+# - [See here for further information if needed](https://github.com/IRkernel/IRkernel) and [here for more info about R notebooks in Jupyter](https://www.datacamp.com/community/blog/jupyter-notebook-r).
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # Example Python to R pipeline
@@ -189,7 +191,7 @@ plot(cos(b),'r')
 # %unload_ext pymatbridge
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
-# # Run Javascript code
+# # Bonus: Run Javascript code
 # Note that Javascript executes as the notebook is opened, even if it's been exported as HTML!
 
 # %% {"language": "javascript"}

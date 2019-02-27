@@ -126,6 +126,7 @@
 # - [**ipypublish**](https://github.com/chrisjsewell/ipypublish)
 #     - For generating scientific manuscripts with Jupyter.
 #     - Feel free to use my template and edits to this package available [here](https://github.com/stefanuddenberg/psipypublish).
+#     - I am currently using version 0.6.7. However, within the last month the package has been updated to at ver. 0.9.0. I can't speak to whether my template will work with higher versions, so feel free to just install the version I use with `pip install ipypublish==0.6.7`
 # - jupyter
 # - jupyter_contrib_nbextensions
 #     - Run the following command for this after install: `jupyter contrib nbextension install --user`

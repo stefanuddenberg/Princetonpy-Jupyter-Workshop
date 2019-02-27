@@ -27,7 +27,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.2
+#     version: 3.7.2
 #   toc:
 #     nav_menu: {}
 #     number_sections: true
