@@ -80,7 +80,7 @@
 # # Kernels
 # Using the main launcher view, you can create a new terminal or new notebooks for any kernel you have installed. There are [over 120 kernels](https://github.com/jupyter/jupyter/wiki/Jupyter-kernels) available. These include R, MATLAB, and Julia.  
 #
-# You can make a new tab by pressing the `+` button toward the top left of the screen. 
+# You can make a new tab by pressing the `+` button toward the top left of the screen, just below the Edit menu.
 
 # %% [markdown]
 # # Views
