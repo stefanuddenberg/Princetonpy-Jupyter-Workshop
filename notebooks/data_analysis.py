@@ -64,7 +64,7 @@
 # ---
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
-# # Intro to data analysis with pandas
+# # Intro to data analysis in Jupyter
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
 # # In-depth pandas tutorial

@@ -63,7 +63,7 @@ jupyter:
     window_display: false
 ---
 
-# Intro to data analysis with pandas
+# Intro to data analysis in Jupyter
 
 
 # In-depth pandas tutorial
