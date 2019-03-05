@@ -26,7 +26,7 @@
 #     name: python
 #     nbconvert_exporter: python
 #     pygments_lexer: ipython3
-#     version: 3.6.2
+#     version: 3.7.2
 #   toc:
 #     nav_menu: {}
 #     number_sections: true
@@ -116,7 +116,7 @@
 
 # %% [markdown] {"hide_input": false, "slideshow": {"slide_type": "slide"}}
 # ## Useful packages
-# Depending on your goals, you may want some (or all) of the following packages. Some may already be installed via Anaconda.
+# Depending on your goals, you may want to install some (or all) of the following packages. Some may already be installed via Anaconda by default.
 #
 # - some kind of plotting library
 #     - altair
@@ -125,8 +125,9 @@
 #     - [pyviz](http://pyviz.org/)
 # - [**ipypublish**](https://github.com/chrisjsewell/ipypublish)
 #     - For generating scientific manuscripts with Jupyter.
-#     - Feel free to use my template and edits to this package available [here](https://github.com/stefanuddenberg/psipypublish).
-#     - I am currently using version 0.6.7. However, within the last month the package has been updated to at ver. 0.9.0. I can't speak to whether my template will work with higher versions, so feel free to just install the version I use with `pip install ipypublish==0.6.7`
+#     - Feel free to use my template and edits to this package available [here](https://github.com/stefanuddenberg/psipypublish). More in-depth instructions available at the link as well.
+#     - I am currently using version 0.6.7. However, within the last month the maintainer of the project has gone on a development spree, and the package has been updated to ver. 0.9.0. I can't speak to whether my template will work with higher versions, but you can always install the version I use with `pip install ipypublish==0.6.7`
+#     - I am also using this in tandem with `nbconvert` version 5.3.1. The latest version (5.4.1 at time of writing) has conversion issues for notebooks that include SVG files in manuscripts.
 # - jupyter
 # - jupyter_contrib_nbextensions
 #     - Run the following command for this after install: `jupyter contrib nbextension install --user`
@@ -140,7 +141,7 @@
 #     ```python
 #     c.NotebookApp.contents_manager_class = "jupytext.TextFileContentsManager"
 #     # Always pair ipynb notebooks to md and py files
-#     c.ContentsManager.default_jupytext_formats = "ipynb,md,py"
+#     c.ContentsManager.default_jupytext_formats = "ipynb,Rmd,py"
 #     # Use the percent format when saving as py
 #     c.ContentsManager.preferred_jupytext_formats_save = "py:percent"
 #     # Keep all metadata in other file types
@@ -190,6 +191,7 @@
 # - [jupyterlab_snippets](https://github.com/QuentinAndre/jupyterlab_snippets) — doesn't currently work for me, but boy would it be useful. In the meantime, I've been using an external program called [Cacher](https://www.cacher.io/)
 # - [code formatter](https://github.com/ryantam626/jupyterlab_code_formatter) — works great with [Black](https://github.com/ambv/black)
 # - [jupyterlab_bokeh](https://github.com/bokeh/jupyterlab_bokeh)
+# - [bqplot](https://github.com/bloomberg/bqplot)
 # - [nbdime](https://github.com/jupyter/nbdime) — for diffing notebooks
 
 # %% [markdown] {"slideshow": {"slide_type": "slide"}}
@@ -204,7 +206,7 @@
 # - contrib_nbextensions_help_item
 # - nbextensions dashboard tab
 # - Collapsible Headings, with add a control, adjust size of toggle controls, gray bracketed ellipsis, command-mode, collapse with ToC2
-# - Python Markdown
+# - **Python Markdown**
 #     - must be trusted notebook to use properly -- enable trust at top-right of notebook
 # - Table of Contents (2), with auto-number, sidebar, widen display, display toc as navigation menu, move title and menu left instead of center, and collapse
 #     - can export notebook to HTML with table of contents with: `jupyter nbconvert --to html_toc FILENAME.ipynb`
